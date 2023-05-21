@@ -1,10 +1,10 @@
 package br.ucs.ffmilani.GestaoUni.model;
 
 import java.util.List;
-import br.ucs.ffmilani.GestaoUni.model.enums.TipoCurso;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
+@Table
 public final class Curso {
 
 	@Id
@@ -12,14 +12,12 @@ public final class Curso {
 	private String nome;
 	private Integer cargaHoraria;
 	private List<Disciplina> curriculo;
-	private TipoCurso tipo;
 	
-	public Curso(String id, String nome, Integer cargaHoraria, List<Disciplina> curriculo, TipoCurso tipo) {
+	public Curso(String id, String nome, Integer cargaHoraria, List<Disciplina> curriculo) {
 		this.id = id;
 		this.nome = nome;
 		this.cargaHoraria = cargaHoraria;
 		this.curriculo = curriculo;
-		this.tipo = tipo;
 	}
 
 	public String getId() {
@@ -58,14 +56,6 @@ public final class Curso {
 		this.curriculo.add(d);
 	}
 
-	public TipoCurso getTipo() {
-		return tipo;
-	}
-
-	public void setTipo(TipoCurso tipo) {
-		this.tipo = tipo;
-	}
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -75,8 +65,6 @@ public final class Curso {
 		builder.append(nome);
 		builder.append(", curriculo=");
 		builder.append(curriculo);
-		builder.append(", tipo=");
-		builder.append(tipo);
 		builder.append("]");
 		return builder.toString();
 	}

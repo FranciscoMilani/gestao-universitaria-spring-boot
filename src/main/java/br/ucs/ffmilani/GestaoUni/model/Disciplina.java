@@ -14,15 +14,13 @@ public final class Disciplina {
 	private String sigla;
 	private Integer creditos;
 	private Integer cargaHoraria;
-	private List<Disciplina> preRequisitos;
 	
-	public Disciplina(Integer id, String nome, String sigla, Integer creditos, Integer cargaHoraria, List<Disciplina> preRequisitos) {
+	public Disciplina(Integer id, String nome, String sigla, Integer creditos, Integer cargaHoraria) {
 		this.id = id;
 		this.nome = nome;
 		this.sigla = sigla;
 		this.creditos = creditos;
 		this.cargaHoraria = cargaHoraria;
-		this.preRequisitos = preRequisitos;
 	}
 
 	public Integer getId() {
@@ -63,14 +61,6 @@ public final class Disciplina {
 
 	public void setCargaHoraria(Integer horas) {
 		this.cargaHoraria = horas;
-	}
-
-	public List<Disciplina> getPreRequisitos() {
-		return preRequisitos;
-	}
-
-	public void setPreRequisitos(List<Disciplina> preRequisitos) {
-		this.preRequisitos = preRequisitos;
 	}
 
 }

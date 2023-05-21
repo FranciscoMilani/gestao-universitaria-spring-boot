@@ -11,6 +11,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 @SpringBootApplication
 @RestController
 public class GestaoUniApplication {
@@ -20,17 +24,17 @@ public class GestaoUniApplication {
 	}
 
 	@Bean
-	ApplicationRunner applicationRunner(@Autowired AlunoJdbcDAO alunoDao){
+	ApplicationRunner applicationRunner(@Autowired AlunoJdbcDAO alunoDao, @Autowired AlunoRepository alunoRepo){
 		return args -> {
+			List<Aluno> alunos = new ArrayList<>();
+
+			alunoRepo.findAll()
+					.iterator()
+					.forEachRemaining(alunos::add);
+
 			Aluno aluno = new Aluno(null, "Francisco Milani", "ffmilani@ucs.br", "123");
 			alunoDao.criar(aluno);
 			//alunos.save(new Aluno(null, "Francisco Milani", "ffmilani@ucs,br", "123"));
 		};
 	}
-
-	@GetMapping("/static")
-	public String index(){
-		return "<h1>Olá mundo!<h1>";
-	}
-
 }

@@ -1,9 +1,9 @@
 package br.ucs.ffmilani.GestaoUni.dao;
 
 import br.ucs.ffmilani.GestaoUni.model.Aluno;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
@@ -14,13 +14,13 @@ import javax.sql.DataSource;
 import java.util.List;
 import java.util.Optional;
 
-
 @Repository
 public class AlunoJdbcDAO implements DAO<Aluno> {
 
     private NamedParameterJdbcTemplate namedJdbcTemplate;
     private final RowMapper<Aluno> rowMapper = (rs, rowNum) -> {
         Aluno aluno = new Aluno(null, null, null, null);
+
         aluno.setId(rs.getLong("id"));
         aluno.setNome(rs.getString("nome"));
         aluno.setEmail(rs.getString("email"));

@@ -1,6 +1,7 @@
 package br.ucs.ffmilani.GestaoUni.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table("aluno")
@@ -10,6 +11,7 @@ public final class Aluno {
 	private String nome;
 	private String email;
 	private String password;
+	@Transient
 	private Curso cursoMatriculado;
 
 	public Aluno(Long id, String nome, String email, String password) {
