@@ -31,12 +31,13 @@ create table curso_disciplina (
     id serial primary key,
     curso integer not null,
     disciplina integer not null,
-    foreign key curso references curso(id),
-    foreign key disciplina references disciplina(id)
+    foreign key (curso) references curso(id),
+    foreign key (disciplina) references disciplina(id)
 );
 
 create table matricula (
     id serial primary key,
+    semestre varchar(6) not null, -- 2023/2
     aluno integer not null,
     disciplina integer not null,
     foreign key (aluno) references aluno(id),

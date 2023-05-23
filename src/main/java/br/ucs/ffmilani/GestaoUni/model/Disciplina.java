@@ -13,14 +13,14 @@ public final class Disciplina {
 	private String nome;
 	private String sigla;
 	private Integer creditos;
-	private Integer cargaHoraria;
+	private Integer cargahoraria;
 	
-	public Disciplina(Integer id, String nome, String sigla, Integer creditos, Integer cargaHoraria) {
+	public Disciplina(Integer id, String nome, String sigla, Integer creditos, Integer cargahoraria) {
 		this.id = id;
 		this.nome = nome;
 		this.sigla = sigla;
 		this.creditos = creditos;
-		this.cargaHoraria = cargaHoraria;
+		this.cargahoraria = cargahoraria;
 	}
 
 	public Integer getId() {
@@ -56,11 +56,11 @@ public final class Disciplina {
 	}
 	
 	public Integer getCargaHoraria() {
-		return cargaHoraria;
+		return cargahoraria;
 	}
 
 	public void setCargaHoraria(Integer horas) {
-		this.cargaHoraria = horas;
+		this.cargahoraria = horas;
 	}
 
 }

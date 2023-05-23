@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Matriculas</title>
+</head>
+<body>
+<h1>Lista de matrículas</h1>
+<table>
+    <tr>
+        <th>Aluno</th>
+        <th>Disciplina</th>
+        <th>Semestre</th>
+    </tr>
+    <tr th:each="matricula : ${matriculas}">
+        <td th:text="${aluno}"></td>
+        <td th:text="${matricula.semestre}"></td>
+    </tr>
+</table>
+</body>
+</html>

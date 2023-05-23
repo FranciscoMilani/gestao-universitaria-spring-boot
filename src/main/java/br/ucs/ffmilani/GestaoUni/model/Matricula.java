@@ -1,6 +1,8 @@
 package br.ucs.ffmilani.GestaoUni.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.List;
@@ -10,15 +12,24 @@ public final class Matricula {
 
 	@Id
 	private Integer id;
-	private Aluno aluno;
-	private Disciplina disciplina;
+	//private Aluno aluno;
+	//private Disciplina disciplina;
 	private String semestre;
+	@Column("aluno")
+	private AggregateReference<Aluno, Integer> aluno;
 
-	public Matricula(Integer id, Aluno aluno, Disciplina disciplina, String semestre) {
+	@Column("disciplina")
+	private AggregateReference<Disciplina, Integer> disciplina;
+
+	public Matricula(Integer id, AggregateReference<Aluno, Integer> aluno, AggregateReference<Disciplina, Integer> disciplina, String semestre) {
 		this.id = id;
 		this.aluno = aluno;
 		this.disciplina = disciplina;
 		this.semestre = semestre;
+	}
+
+	public Matricula() {
+
 	}
 
 	public Integer getId() {
@@ -29,21 +40,37 @@ public final class Matricula {
 		this.id = id;
 	}
 
-	public Aluno getAluno() {
+//	public Aluno getAluno() {
+//		return aluno;
+//	}
+//
+//	public void setAluno(Aluno aluno) {
+//		this.aluno = aluno;
+//	}
+
+	public AggregateReference<Aluno, Integer> getAluno() {
 		return aluno;
 	}
 
-	public void setAluno(Aluno aluno) {
+	public void setAluno(AggregateReference<Aluno, Integer> aluno) {
 		this.aluno = aluno;
 	}
 
-	public Disciplina getDisciplina() {
+	public AggregateReference<Disciplina, Integer> getDisciplina() {
 		return disciplina;
 	}
 
-	public void setDisciplina(Disciplina disciplina) {
+	public void setDisciplina(AggregateReference<Disciplina, Integer> aluno) {
 		this.disciplina = disciplina;
 	}
+
+//	public Disciplina getDisciplina() {
+//		return disciplina;
+//	}
+//
+//	public void setDisciplina(Disciplina disciplina) {
+//		this.disciplina = disciplina;
+//	}
 
 	public String getSemestre() {
 		return semestre;
@@ -53,4 +80,13 @@ public final class Matricula {
 		this.semestre = semestre;
 	}
 
+	@Override
+	public String toString() {
+		return "Matricula{" +
+				"id=" + id +
+				", aluno=" + aluno +
+				", disciplina=" + disciplina +
+				", semestre='" + semestre + '\'' +
+				'}';
+	}
 }

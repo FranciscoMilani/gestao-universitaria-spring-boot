@@ -1,6 +1,10 @@
 package br.ucs.ffmilani.GestaoUni.model;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 
@@ -10,14 +14,13 @@ public final class Curso {
 	@Id
 	private String id;
 	private String nome;
-	private Integer cargaHoraria;
-	private List<Disciplina> curriculo;
+	private Integer cargahoraria;
+	private List<Disciplina> curriculo = new ArrayList<>();
 	
-	public Curso(String id, String nome, Integer cargaHoraria, List<Disciplina> curriculo) {
+	public Curso(String id, String nome, Integer cargahoraria) {
 		this.id = id;
 		this.nome = nome;
-		this.cargaHoraria = cargaHoraria;
-		this.curriculo = curriculo;
+		this.cargahoraria = cargahoraria;
 	}
 
 	public String getId() {
@@ -37,11 +40,11 @@ public final class Curso {
 	}
 
 	public Integer getCargaHoraria() {
-		return cargaHoraria;
+		return cargahoraria;
 	}
 
-	public void setCargaHoraria(Integer cargaHoraria) {
-		this.cargaHoraria = cargaHoraria;
+	public void setCargaHoraria(Integer cargahoraria) {
+		this.cargahoraria = cargahoraria;
 	}
 
 	public List<Disciplina> getCurriculo() {
@@ -52,21 +55,8 @@ public final class Curso {
 		this.curriculo = curriculo;
 	}
 	
-	public void addDisciplina(Disciplina d) {
-		this.curriculo.add(d);
-	}
-
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Curso [id=");
-		builder.append(id);
-		builder.append(", nome=");
-		builder.append(nome);
-		builder.append(", curriculo=");
-		builder.append(curriculo);
-		builder.append("]");
-		return builder.toString();
+	public void addDisciplina(Disciplina disciplina) {
+		curriculo.add(disciplina);
 	}
 	
 }
