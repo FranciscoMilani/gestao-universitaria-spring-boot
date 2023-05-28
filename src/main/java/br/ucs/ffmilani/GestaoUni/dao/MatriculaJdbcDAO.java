@@ -1,5 +1,6 @@
 package br.ucs.ffmilani.GestaoUni.dao;
 
+import br.ucs.ffmilani.GestaoUni.model.Aluno;
 import br.ucs.ffmilani.GestaoUni.model.Matricula;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.dao.DataAccessException;
@@ -17,7 +18,18 @@ import java.util.Optional;
 @Repository
 public class MatriculaJdbcDAO implements DAO<Matricula> {
 
-    private final RowMapper<Matricula> rowMapper = BeanPropertyRowMapper.newInstance(Matricula.class);
+    //private final RowMapper<Matricula> rowMapper = BeanPropertyRowMapper.newInstance(Matricula.class);
+
+    private final RowMapper<Matricula> rowMapper = (rs, rowNum) -> {
+        Matricula matricula = new Matricula(null, null, null, null);
+
+        matricula.setId(rs.getInt("id"));
+//        matricula.setAluno(rs.getString("aluno"));
+//        matricula.setEmail(rs.getString("email"));
+//        matricula.setPassword(rs.getString("password"));
+        return matricula;
+    };
+
 
     private NamedParameterJdbcTemplate namedJdbcTemplate;
 

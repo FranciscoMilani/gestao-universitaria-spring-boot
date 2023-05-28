@@ -1,0 +1,20 @@
+<div th:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h1 class="text-center">Lista de matrículas</h1>
+    <table class="table">
+        <tr>
+            <th>Aluno</th>
+            <th>Disciplina</th>
+            <th>Semestre</th>
+        </tr>
+        <tr th:each="head : ${headers}">
+            <td th:text="${matricula.nomeAluno()}"></td>
+            <td th:text="${matricula.nomeDisciplina()}"></td>
+            <td th:text="${matricula.semestre()}"></td>
+        </tr>
+        <tr th:each="matricula : ${matriculas}">
+            <td th:text="${matricula.nomeAluno()}"></td>
+            <td th:text="${matricula.nomeDisciplina()}"></td>
+            <td th:text="${matricula.semestre()}"></td>
+        </tr>
+    </table>
+</div>

@@ -7,25 +7,25 @@ import org.springframework.data.relational.core.mapping.Table;
 @Table("aluno")
 public final class Aluno {
 	@Id
-	private Long id;
+	private Integer id;
 	private String nome;
 	private String email;
 	private String password;
 	@Transient
 	private Curso cursoMatriculado;
 
-	public Aluno(Long id, String nome, String email, String password) {
+	public Aluno(Integer id, String nome, String email, String password) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.password = password;
 	}
 	
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 	

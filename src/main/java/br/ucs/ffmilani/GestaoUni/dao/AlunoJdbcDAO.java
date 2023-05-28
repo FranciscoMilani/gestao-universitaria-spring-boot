@@ -21,7 +21,7 @@ public class AlunoJdbcDAO implements DAO<Aluno> {
     private final RowMapper<Aluno> rowMapper = (rs, rowNum) -> {
         Aluno aluno = new Aluno(null, null, null, null);
 
-        aluno.setId(rs.getLong("id"));
+        aluno.setId(rs.getInt("id"));
         aluno.setNome(rs.getString("nome"));
         aluno.setEmail(rs.getString("email"));
         aluno.setPassword(rs.getString("password"));

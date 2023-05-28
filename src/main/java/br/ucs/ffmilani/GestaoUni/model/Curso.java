@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table
@@ -15,7 +16,8 @@ public final class Curso {
 	private String id;
 	private String nome;
 	private Integer cargahoraria;
-	private List<Disciplina> curriculo = new ArrayList<>();
+	@MappedCollection(keyColumn = "disciplina", idColumn = "disciplina")
+	private List<DisciplinaRef> curriculo = new ArrayList<>();
 	
 	public Curso(String id, String nome, Integer cargahoraria) {
 		this.id = id;
@@ -47,15 +49,15 @@ public final class Curso {
 		this.cargahoraria = cargahoraria;
 	}
 
-	public List<Disciplina> getCurriculo() {
+	public List<DisciplinaRef> getCurriculo() {
 		return curriculo;
 	}
 
-	public void setCurriculo(List<Disciplina> curriculo) {
+	public void setCurriculo(List<DisciplinaRef> curriculo) {
 		this.curriculo = curriculo;
 	}
 	
-	public void addDisciplina(Disciplina disciplina) {
+	public void addDisciplina(DisciplinaRef disciplina) {
 		curriculo.add(disciplina);
 	}
 	

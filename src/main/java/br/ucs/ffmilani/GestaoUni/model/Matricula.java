@@ -12,14 +12,11 @@ public final class Matricula {
 
 	@Id
 	private Integer id;
-	//private Aluno aluno;
-	//private Disciplina disciplina;
-	private String semestre;
 	@Column("aluno")
 	private AggregateReference<Aluno, Integer> aluno;
-
 	@Column("disciplina")
 	private AggregateReference<Disciplina, Integer> disciplina;
+	private String semestre;
 
 	public Matricula(Integer id, AggregateReference<Aluno, Integer> aluno, AggregateReference<Disciplina, Integer> disciplina, String semestre) {
 		this.id = id;
@@ -40,14 +37,6 @@ public final class Matricula {
 		this.id = id;
 	}
 
-//	public Aluno getAluno() {
-//		return aluno;
-//	}
-//
-//	public void setAluno(Aluno aluno) {
-//		this.aluno = aluno;
-//	}
-
 	public AggregateReference<Aluno, Integer> getAluno() {
 		return aluno;
 	}
@@ -63,14 +52,6 @@ public final class Matricula {
 	public void setDisciplina(AggregateReference<Disciplina, Integer> aluno) {
 		this.disciplina = disciplina;
 	}
-
-//	public Disciplina getDisciplina() {
-//		return disciplina;
-//	}
-//
-//	public void setDisciplina(Disciplina disciplina) {
-//		this.disciplina = disciplina;
-//	}
 
 	public String getSemestre() {
 		return semestre;
