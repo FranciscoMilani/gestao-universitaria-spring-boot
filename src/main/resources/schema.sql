@@ -6,17 +6,20 @@ create table universidade (
 
 create table aluno (
     id serial primary key,
-    --version int,
     nome varchar(255) not null,
     email varchar(255) not null,
-    password varchar(30) not null
+    password varchar(30) not null,
+    curso integer,
+    foreign key (curso) references curso(id)
 );
 
 create table curso (
     id serial primary key,
     nome varchar(255) not null,
     cargaHoraria integer not null,
-    tipo varchar(30)
+    tipo varchar(30),
+    universidade integer not null,
+    foreign key (universidade) references universidade(id)
 );
 
 create table disciplina (
@@ -28,12 +31,11 @@ create table disciplina (
 );
 
 create table curso_disciplina (
-    id serial primary key,
-    curso integer not null,
-    disciplina integer not null,
-    foreign key (curso) references curso(id),
-    foreign key (disciplina) references disciplina(id)
-);
+	curso integer,
+	disciplina integer,
+	foreign key (curso) references curso(id),
+	foreign key (disciplina) references disciplina(id)
+)
 
 create table matricula (
     id serial primary key,

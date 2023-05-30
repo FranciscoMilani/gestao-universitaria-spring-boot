@@ -32,7 +32,7 @@ public class MatriculaController {
     @Autowired
     private DisciplinaRepository disciplinaRepo;
 
-    @GetMapping("/")
+    @GetMapping("/matriculas")
     public String listaMatriculas(Model model){
         List<MatriculaDTO> mats = new ArrayList<>();
 

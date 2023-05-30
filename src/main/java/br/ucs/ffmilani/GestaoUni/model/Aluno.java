@@ -2,6 +2,8 @@ package br.ucs.ffmilani.GestaoUni.model;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.Transient;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 @Table("aluno")
@@ -11,8 +13,12 @@ public final class Aluno {
 	private String nome;
 	private String email;
 	private String password;
-	@Transient
-	private Curso cursoMatriculado;
+
+	//@Transient
+	@Column("id")
+	private Curso curso;
+
+	//private AggregateReference<Curso, Integer> curso;
 
 	public Aluno(Integer id, String nome, String email, String password) {
 		this.id = id;
@@ -53,11 +59,11 @@ public final class Aluno {
 		this.password = password;
 	}
 
-	public Curso getCursoMatriculado() {
-		return cursoMatriculado;
+	public Curso getCurso() {
+		return curso;
 	}
 
-	public void setCursoMatriculado(Curso cursoMatriculado) {
-		this.cursoMatriculado = cursoMatriculado;
+	public void setCurso(Curso curso) {
+		this.curso = curso;
 	}
 }

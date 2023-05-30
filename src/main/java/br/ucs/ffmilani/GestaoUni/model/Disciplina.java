@@ -1,6 +1,7 @@
 package br.ucs.ffmilani.GestaoUni.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.List;
@@ -55,11 +56,11 @@ public final class Disciplina {
 		this.creditos = creditos;
 	}
 	
-	public Integer getCargaHoraria() {
+	public Integer getCargahoraria() {
 		return cargahoraria;
 	}
 
-	public void setCargaHoraria(Integer horas) {
+	public void setCargahoraria(Integer horas) {
 		this.cargahoraria = horas;
 	}
 

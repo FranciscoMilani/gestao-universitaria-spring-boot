@@ -13,7 +13,8 @@
         .divider {
             flex-shrink: 0;
             width: 1.5rem;
-            height: 100vh;
+            top: 0;
+            bottom: 0;
             background-color: rgba(0, 0, 0, .1);
             border: solid rgba(0, 0, 0, .15);
             border-width: 1px 0;
@@ -26,47 +27,50 @@
             height: 100%;
         }
     </style>
+    <script type="text/javascript" src="js/site.js"></script>
 </head>
 <body>
 <div class="d-flex flex-row">
     <nav>
-        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark bar" style="width: 280px;">
+        <div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark bar position-sticky" style="width: 280px; height: 100vh;">
             <p href="/" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <span class="fs-4">Navegação</span>
             </p>
             <hr>
             <ul class="nav nav-pills flex-column mb-auto">
                 <li class="nav-item">
-                    <a href="/matricular" class="nav-link active">
+                    <a href="/matricular" id="matricular-link" class="nav-link text-white">
                         Matricular aluno
                     </a>
                 </li>
                 <hr>
                 <li>
-                    <a href="/matriculas" class="nav-link text-white">
+                    <a href="/matriculas" id="matriculas-link" class="nav-link text-white">
                         Relatório de matrículas
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link">
+                    <a href="/cursos" id="cursos-link" class="nav-link text-white">
                         Relatório de cursos
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link">
+                    <a href="/alunos" id="alunos-link" class="nav-link text-white">
                         Relatório de alunos
                     </a>
                 </li>
                 <li>
-                    <a href="#" class="nav-link">
+                    <a href="/disciplinas" id="disciplinas-link" class="nav-link text-white">
                         Relatório de disciplinas
                     </a>
                 </li>
             </ul>
+        <hr>
+        <span>Banco:</span><span th:text="${banco}"></span>
         </div>
     </nav>
-    <div class="divider"></div>
-    <div th:replace="${layout} :: content" class="table-responsive"></div>
+    <div class="divider flex-shrink-1"></div>
+    <div th:insert="${layout} ? ~{${layout}  :: content} : _" class="container mt-5 table-responsive flex-fill" style="height: 85vh"></div>
 </div >
 </body>
 </html>

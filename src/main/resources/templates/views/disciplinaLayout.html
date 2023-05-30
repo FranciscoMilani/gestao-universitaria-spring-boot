@@ -1,0 +1,17 @@
+<div th:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h1 class="text-center" id="titulo" data-titulo="Lista de Disciplinas">Lista de Disciplinas</h1>
+    <table class="table align-center table-striped table-dark table-hover overflow-hidden rounded-3">
+        <tr class="table-light">
+            <th>Nome</th>
+            <th>Sigla</th>
+            <th>Créditos</th>
+            <th>Carga Horária</th>
+        </tr>
+        <tr th:each="disciplina : ${disciplinas}">
+            <td th:text="${disciplina.nome}"></td>
+            <td th:text="${disciplina.sigla}"></td>
+            <td th:text="${disciplina.creditos}"></td>
+            <td th:text="${disciplina.cargahoraria}"></td>
+        </tr>
+    </table>
+</div>

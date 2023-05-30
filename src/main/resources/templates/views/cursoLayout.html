@@ -1,0 +1,17 @@
+<div th:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
+    <h1 class="text-center" id="titulo" data-titulo="Lista de Cursos">Lista de Cursos</h1>
+    <table class="table align-center table-striped table-dark table-hover overflow-hidden rounded-3">
+        <tr class="table-light">
+            <th>Nome</th>
+            <th>Carga Horária</th>
+            <th>Disciplinas</th>
+        </tr>
+        <tr th:each="curso : ${cursos}">
+            <td th:text="${curso.nome}"></td>
+            <td th:text="${curso.cargaHoraria}"></td>
+            <td th:each="disc : ${curso.disciplinas}">
+                <span th:text="${disc + ', '}"></span>
+            </td>
+        </tr>
+    </table>
+</div>

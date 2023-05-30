@@ -1,35 +1,39 @@
 package br.ucs.ffmilani.GestaoUni.model;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
+import br.ucs.ffmilani.GestaoUni.dao.UniversidadeRepository;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table
+@Table("curso")
 public final class Curso {
 
 	@Id
-	private String id;
+	private Integer id;
 	private String nome;
 	private Integer cargahoraria;
-	@MappedCollection(keyColumn = "disciplina", idColumn = "disciplina")
-	private List<DisciplinaRef> curriculo = new ArrayList<>();
-	
-	public Curso(String id, String nome, Integer cargahoraria) {
+	@MappedCollection(idColumn="curso", keyColumn="disciplina")
+	private Set<DisciplinaRef> disciplinas = new HashSet<>();
+
+//	@Column("id")
+//	private Universidade universidade;
+
+	public Curso(Integer id, String nome, Integer cargahoraria) {
 		this.id = id;
 		this.nome = nome;
 		this.cargahoraria = cargahoraria;
 	}
 
-	public String getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(String id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -49,16 +53,16 @@ public final class Curso {
 		this.cargahoraria = cargahoraria;
 	}
 
-	public List<DisciplinaRef> getCurriculo() {
-		return curriculo;
+	public Set<DisciplinaRef> getDisciplinas() {
+		return disciplinas;
 	}
 
-	public void setCurriculo(List<DisciplinaRef> curriculo) {
-		this.curriculo = curriculo;
+	public void setDisciplinas(Set<DisciplinaRef> disciplina) {
+		this.disciplinas = disciplina;
 	}
 	
-	public void addDisciplina(DisciplinaRef disciplina) {
-		curriculo.add(disciplina);
+	public void addDisciplinas(Disciplina disciplina) {
+		this.disciplinas.add(new DisciplinaRef(disciplina.getId()));
 	}
-	
+
 }
