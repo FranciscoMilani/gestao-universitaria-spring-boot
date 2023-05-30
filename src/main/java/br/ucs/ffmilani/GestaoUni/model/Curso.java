@@ -60,7 +60,7 @@ public final class Curso {
 	public void setDisciplinas(Set<DisciplinaRef> disciplina) {
 		this.disciplinas = disciplina;
 	}
-	
+
 	public void addDisciplinas(Disciplina disciplina) {
 		this.disciplinas.add(new DisciplinaRef(disciplina.getId()));
 	}

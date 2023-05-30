@@ -9,7 +9,8 @@
         <tr th:each="aluno : ${alunos}">
             <td th:text="${aluno.nome}"></td>
             <td th:text="${aluno.email}"></td>
-            <td th:text="${aluno.curso != null ? aluno.curso.nome : _}"></td>
+            <td th:text="${aluno.nomeCurso}"></td>
+<!--            <td th:text="${aluno.curso != null ? aluno.curso.nome : _}"></td>-->
         </tr>
     </table>
 </div>

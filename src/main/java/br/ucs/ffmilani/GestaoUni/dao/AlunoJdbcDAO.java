@@ -19,7 +19,7 @@ public class AlunoJdbcDAO implements DAO<Aluno> {
 
     private NamedParameterJdbcTemplate namedJdbcTemplate;
     private final RowMapper<Aluno> rowMapper = (rs, rowNum) -> {
-        Aluno aluno = new Aluno(null, null, null, null);
+        Aluno aluno = new Aluno(null, null, null, null, null);
 
         aluno.setId(rs.getInt("id"));
         aluno.setNome(rs.getString("nome"));

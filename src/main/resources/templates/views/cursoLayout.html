@@ -9,9 +9,7 @@
         <tr th:each="curso : ${cursos}">
             <td th:text="${curso.nome}"></td>
             <td th:text="${curso.cargaHoraria}"></td>
-            <td th:each="disc : ${curso.disciplinas}">
-                <span th:text="${disc + ', '}"></span>
-            </td>
+            <td><span th:text="${#strings.listJoin(curso.disciplinas, ', ')}"></span></td>
         </tr>
     </table>
 </div>

@@ -27,7 +27,8 @@ public class CursoController {
         List<CursoDTO> cursos = new ArrayList<>();
         cursoRepo.findAll().forEach(curso -> {
             List<String> nomesDisciplinas = new ArrayList<>();
-            for (var disc : curso.getDisciplinas()){
+
+            for (DisciplinaRef disc : curso.getDisciplinas()){
                 nomesDisciplinas.add(disciplinaRepo.findById(disc.getId()).get().getNome());
             }
 

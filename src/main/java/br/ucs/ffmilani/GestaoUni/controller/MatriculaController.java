@@ -53,7 +53,6 @@ public class MatriculaController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("index");
         mv.addObject("layout", "matricularLayout.html");
-        //mv.addObject("layout", view);
         return mv;
     }
 

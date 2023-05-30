@@ -15,16 +15,17 @@ public final class Aluno {
 	private String password;
 
 	//@Transient
-	@Column("id")
-	private Curso curso;
+//	@Column("id")
+//	private Curso curso;
 
-	//private AggregateReference<Curso, Integer> curso;
+	private AggregateReference<Curso, Integer> curso;
 
-	public Aluno(Integer id, String nome, String email, String password) {
+	public Aluno(Integer id, String nome, String email, String password, AggregateReference<Curso, Integer> curso) {
 		this.id = id;
 		this.nome = nome;
 		this.email = email;
 		this.password = password;
+		this.curso = curso;
 	}
 	
 	public Integer getId() {
@@ -59,11 +60,11 @@ public final class Aluno {
 		this.password = password;
 	}
 
-	public Curso getCurso() {
+	public AggregateReference<Curso, Integer> getCurso() {
 		return curso;
 	}
 
-	public void setCurso(Curso curso) {
+	public void setCurso(AggregateReference<Curso, Integer> curso) {
 		this.curso = curso;
 	}
 }

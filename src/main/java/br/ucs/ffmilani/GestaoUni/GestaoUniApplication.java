@@ -11,6 +11,7 @@ import org.springframework.data.jdbc.core.mapping.AggregateReference;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 @SpringBootApplication
@@ -26,7 +27,8 @@ public class GestaoUniApplication {
                                         @Autowired AlunoRepository alunoRepo,
                                         @Autowired DisciplinaRepository disciplinaRepo,
 										@Autowired CursoRepository cursoRepo,
-										@Autowired UniversidadeRepository uniRepo) {
+										@Autowired UniversidadeRepository uniRepo,
+										@Autowired MatriculaRepository matriculaRepo) {
 		return args -> {
 
 			Universidade universidade = new Universidade(null, "UCS", "Universidade de Caxias do Sul");
@@ -38,49 +40,9 @@ public class GestaoUniApplication {
 			 * =============================================
 			 */
 
-			Curso ads = new Curso(null, "Análise e Desenvolvimento de Sistemas", 2100);
-			Curso jgs = new Curso(null, "Jogos Digitais", 2100);
-			Curso bio = new Curso(null, "Biomedicina", 3400);
-
-			ads = cursoRepo.save(ads);
-//			cursoRepo.save(jgs);
-//			cursoRepo.save(bio);
-
-			/*
-			* =============================================
-			* 					ALUNOS
-			* =============================================
-			*/
-			List<Aluno> alunosAds = Arrays.asList(
-					new Aluno(null, "Francisco Milani", "ffmilani@ucs.br", "1234fd5a"),
-					new Aluno(null, "Eduardo Viezzer", "eviezzer@ucs.br", "123443DFSfb"),
-					new Aluno(null, "Yago Martins", "ymartins@ucs.br", "123fdsgrewTFc"),
-					new Aluno(null, "Ezequiel", "ezequiel@ucs.br", "12sFD22d"),
-					new Aluno(null, "Raul Tomedi Pilotti", "rtpilotti@ucs.br", "1dsfdse")
-			);
-
-			Curso finalAds = ads;
-			alunosAds.forEach(aluno -> aluno.setCurso(finalAds));
-
-//			List<Aluno> alunosJogos = Arrays.asList(
-//					new Aluno(null, "Pedro Henrique", "phcosta@ucs.br", "12dx3c", jgs),
-//					new Aluno(null, "Bruno Afonso", "basilva5@ucs.br", "1GFD122vd2d", jgs),
-//					new Aluno(null, "Juliano Giotti", "jgiotti@ucs.br", "1e$aavde", jgs),
-//					new Aluno(null, "Gustavo Silva", "gsilva2@ucs.br", "21eaadvc", jgs),
-//					new Aluno(null, "Fulano da Silva", "fdsilva8@ucs.br", "1!efg%ss", jgs)
-//			);
-//
-//			List<Aluno> alunosBio = Arrays.asList(
-//					new Aluno(null, "Laura Santos", "lssantos@ucs.br", "23213SfdjF#", bio),
-//					new Aluno(null, "Luiz Augusto Fornasier Milani", "lafmilani@ucs.br", "1234fdsFFb", bio),
-//					new Aluno(null, "Gabriel Ferreira", "gferreira@ucs.br", "EE123cFc1", bio),
-//					new Aluno(null, "Ana Oliveira", "aoliveira@ucs.br", "123fdF", bio),
-//					new Aluno(null, "Carolina Ribeiro", "cribeiro@ucs.br", "FDDF1EWd12", bio)
-//			);
-
-			alunoRepo.saveAll(alunosAds);
-//			alunoRepo.saveAll(alunosJogos);
-//			alunoRepo.saveAll(alunosBio);
+			Curso cursoAds = new Curso(null, "Análise e Desenvolvimento de Sistemas", 2100);
+			Curso cursoJgs = new Curso(null, "Jogos Digitais", 2100);
+			Curso cursoBio = new Curso(null, "Biomedicina", 3400);
 
 			/*
 			 * =============================================
@@ -89,16 +51,16 @@ public class GestaoUniApplication {
 			 */
 
 			List<Disciplina> disciplinasAds = Arrays.asList(
-					new Disciplina(null, "Lógica para Computação", "FBI1234", 4, 80),
-					new Disciplina(null, "Programação de Computadores I", "FBI1234", 4, 80),
-					new Disciplina(null, "Programação Orientada a Objetos", "FBI1234", 4, 80),
-					new Disciplina(null, "Projeto Temático I", "FBI1234", 4, 80),
-					new Disciplina(null, "Laboratório de Software", "FBI1234", 4, 80),
-					new Disciplina(null, "Projeto e Arquitetura de Software", "FBI1234", 2, 40),
-					new Disciplina(null, "Fundamentos de Banco de Dados", "FBI1234", 4, 80),
-					new Disciplina(null, "Algoritmos e Estrutura de Dados I", "FBI1234", 4, 80),
-					new Disciplina(null, "Programação de Aplicações Web I", "FBI1234", 4, 80),
-					new Disciplina(null, "Programação de Aplicações Web II", "FBI1234", 4, 80)
+					new Disciplina(null, "Lógica para Computação", "ADS1111", 4, 80),
+					new Disciplina(null, "Programação de Computadores I", "ADS2222", 4, 80),
+					new Disciplina(null, "Programação Orientada a Objetos", "ADS3333", 4, 80),
+					new Disciplina(null, "Projeto Temático I", "ADS4444", 4, 80),
+					new Disciplina(null, "Laboratório de Software", "ADS5555", 4, 80),
+					new Disciplina(null, "Projeto e Arquitetura de Software", "ADS6666", 2, 40),
+					new Disciplina(null, "Fundamentos de Banco de Dados", "ADS7777", 4, 80),
+					new Disciplina(null, "Algoritmos e Estrutura de Dados I", "ADS8888", 4, 80),
+					new Disciplina(null, "Programação de Aplicações Web I", "ADS9999", 4, 80),
+					new Disciplina(null, "Programação de Aplicações Web II", "ADS0000", 4, 80)
 			);
 
 			List<Disciplina> disciplinasJogos = Arrays.asList(
@@ -127,7 +89,65 @@ public class GestaoUniApplication {
 					new Disciplina(null, "Citopatologia", "BIO9999", 3, 60)
 			);
 
+			disciplinasAds.forEach(disciplina -> {
+				Disciplina d = disciplinaRepo.save(disciplina);
+				cursoAds.addDisciplinas(d);
+			});
 
+            disciplinasJogos.forEach(disciplina -> {
+                Disciplina d = disciplinaRepo.save(disciplina);
+                cursoJgs.addDisciplinas(d);
+            });
+
+            disciplinasBio.forEach(disciplina -> {
+                Disciplina d = disciplinaRepo.save(disciplina);
+                cursoBio.addDisciplinas(d);
+            });
+
+			Curso ads = cursoRepo.save(cursoAds);
+			Curso jgs = cursoRepo.save(cursoJgs);
+			Curso bio = cursoRepo.save(cursoBio);
+
+
+			/*
+			* =============================================
+			* 					ALUNOS
+			* =============================================
+			*/
+			List<Aluno> alunosAds = Arrays.asList(
+					new Aluno(null, "Francisco Milani", "ffmilani@ucs.br", "1234fd5a", AggregateReference.to(ads.getId())),
+					new Aluno(null, "Eduardo Viezzer", "eviezzer@ucs.br", "123443DFSfb", AggregateReference.to(ads.getId())),
+					new Aluno(null, "Yago Martins", "ymartins@ucs.br", "123fdsgrewTFc", AggregateReference.to(ads.getId())),
+					new Aluno(null, "Ezequiel", "ezequiel@ucs.br", "12sFD22d", AggregateReference.to(ads.getId())),
+					new Aluno(null, "Raul Tomedi Pilotti", "rtpilotti@ucs.br", "1dsfdse", AggregateReference.to(ads.getId()))
+			);
+
+			List<Aluno> alunosJogos = Arrays.asList(
+					new Aluno(null, "Pedro Henrique", "phcosta@ucs.br", "12dx3c", AggregateReference.to(jgs.getId())),
+					new Aluno(null, "Bruno Afonso", "basilva5@ucs.br", "1GFD122vd2d", AggregateReference.to(jgs.getId())),
+					new Aluno(null, "Juliano Giotti", "jgiotti@ucs.br", "1e$aavde", AggregateReference.to(jgs.getId())),
+					new Aluno(null, "Gustavo Silva", "gsilva2@ucs.br", "21eaadvc", AggregateReference.to(jgs.getId())),
+					new Aluno(null, "Fulano da Silva", "fdsilva8@ucs.br", "1!efg%ss", AggregateReference.to(jgs.getId()))
+			);
+
+			List<Aluno> alunosBio = Arrays.asList(
+					new Aluno(null, "Laura Santos", "lssantos@ucs.br", "23213SfdjF#", AggregateReference.to(bio.getId())),
+					new Aluno(null, "Luiz Augusto Fornasier Milani", "lafmilani@ucs.br", "1234fdsFFb", AggregateReference.to(bio.getId())),
+					new Aluno(null, "Gabriel Ferreira", "gferreira@ucs.br", "EE123cFc1", AggregateReference.to(bio.getId())),
+					new Aluno(null, "Ana Oliveira", "aoliveira@ucs.br", "123fdF", AggregateReference.to(bio.getId())),
+					new Aluno(null, "Carolina Ribeiro", "cribeiro@ucs.br", "FDDF1EWd12", AggregateReference.to(bio.getId()))
+			);
+
+			alunoRepo.saveAll(alunosAds);
+			alunoRepo.saveAll(alunosJogos);
+			alunoRepo.saveAll(alunosBio);
+
+			Matricula m1 = new Matricula(
+					null,
+					AggregateReference.to(alunoRepo.findByEmail("ffmilani@ucs.br").getId()),
+					AggregateReference.to(disciplinaRepo.findBySigla("ADS1111").getId()), "2023/2");
+
+			matriculaRepo.save(m1);
 
 //			uniRepo.save(universidade);
 //			cursoRepo.saveAll(cursos);
