@@ -1,1 +1,0 @@
-INSERT INTO aluno VALUES (DEFAULT, "teste", "insert", "data.sql")

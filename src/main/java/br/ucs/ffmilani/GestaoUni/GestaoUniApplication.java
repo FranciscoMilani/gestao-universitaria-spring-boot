@@ -4,27 +4,31 @@ import br.ucs.ffmilani.GestaoUni.dao.*;
 import br.ucs.ffmilani.GestaoUni.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationRunner;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
 
-import java.util.ArrayList;
+import javax.sql.DataSource;
+import javax.swing.*;
+import java.awt.*;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
 
 @SpringBootApplication
-//@RestController
 public class GestaoUniApplication {
+	@Autowired
+	public DataSource dataSource;
 
 	public static void main(String[] args) {
-		SpringApplication.run(GestaoUniApplication.class, args);
+		new SpringApplicationBuilder(GestaoUniApplication.class).headless(false).run(args);
 	}
 
 	@Bean
-	ApplicationRunner applicationRunner(@Autowired AlunoJdbcDAO alunoDao,
-                                        @Autowired AlunoRepository alunoRepo,
+	@ConditionalOnProperty(prefix = "dados", value = "cadastro")
+	ApplicationRunner applicationRunner(@Autowired AlunoRepository alunoRepo,
                                         @Autowired DisciplinaRepository disciplinaRepo,
 										@Autowired CursoRepository cursoRepo,
 										@Autowired UniversidadeRepository uniRepo,
@@ -142,24 +146,41 @@ public class GestaoUniApplication {
 			alunoRepo.saveAll(alunosJogos);
 			alunoRepo.saveAll(alunosBio);
 
-			Matricula m1 = new Matricula(
-					null,
+			/*
+			 * =============================================
+			 * 				    MATRICULAS
+			 * =============================================
+			 */
+
+			Matricula m1 = new Matricula(null,
 					AggregateReference.to(alunoRepo.findByEmail("ffmilani@ucs.br").getId()),
 					AggregateReference.to(disciplinaRepo.findBySigla("ADS1111").getId()), "2023/2");
 
-			matriculaRepo.save(m1);
+			Matricula m2 = new Matricula(null,
+					AggregateReference.to(alunoRepo.findByEmail("ffmilani@ucs.br").getId()),
+					AggregateReference.to(disciplinaRepo.findBySigla("ADS2222").getId()), "2023/2");
 
-//			uniRepo.save(universidade);
-//			cursoRepo.saveAll(cursos);
-//
-//
-//			Disciplina d = disciplinaRepo.save(disciplina);
-//			curso.addDisciplinas(d);
-//			aluno.setCursoMatriculado(curso);
-//
-//
-//			cursoRepo.save(curso);
-//			alunoRepo.saveAll(alunos);
+			Matricula m3 = new Matricula(null,
+					AggregateReference.to(alunoRepo.findByEmail("ffmilani@ucs.br").getId()),
+					AggregateReference.to(disciplinaRepo.findBySigla("ADS3333").getId()), "2023/2");
+
+			matriculaRepo.save(m1);
+			matriculaRepo.save(m2);
+			matriculaRepo.save(m3);
 		};
+	}
+
+	@Bean(name = "dbms")
+	public String dbms(){
+		try {
+			return dataSource.getConnection().getMetaData().getDatabaseProductName();
+		} catch (Exception e) {
+			return "?";
+		}
+	}
+
+	@Bean
+	CommandLineRunner runner(@Autowired MainFrame frame) {
+		return args -> SwingUtilities.invokeLater(() -> new Window(frame));
 	}
 }

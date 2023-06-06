@@ -1,4 +1,4 @@
-package br.ucs.ffmilani.GestaoUni.controller;
+package br.ucs.ffmilani.GestaoUni.controller.web;
 
 import br.ucs.ffmilani.GestaoUni.dao.AlunoRepository;
 import br.ucs.ffmilani.GestaoUni.dao.DisciplinaRepository;
@@ -7,18 +7,17 @@ import br.ucs.ffmilani.GestaoUni.model.Aluno;
 import br.ucs.ffmilani.GestaoUni.model.Disciplina;
 import br.ucs.ffmilani.GestaoUni.model.Matricula;
 import br.ucs.ffmilani.GestaoUni.model.MatriculaDTO;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.Banner;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.View;
 
-import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,9 +32,9 @@ public class MatriculaController {
     private DisciplinaRepository disciplinaRepo;
 
     @GetMapping("/matriculas")
-    public String listaMatriculas(Model model){
+    public String listaMatriculas(Model model, @Autowired HttpSession session){
         List<MatriculaDTO> mats = new ArrayList<>();
-
+        System.out.println(session.getAttribute("dbms"));
         matriculaRepo.findAll().forEach( m -> {
                 Optional<Aluno> a = alunoRepo.findById(m.getAluno().getId());
                 Optional<Disciplina> d = disciplinaRepo.findById(m.getDisciplina().getId());
@@ -59,30 +58,34 @@ public class MatriculaController {
     @PostMapping("/matricular")
     public String matricular(@RequestParam("aluno") String paramAluno,
                              @RequestParam("disciplina") String paramDisciplina,
-                             @RequestParam("semestre") String paramSemestre) {
+                             @RequestParam("semestre") String paramSemestre,
+                             Model model) {
 
-        Optional<Aluno> aluno;
-        Optional<Disciplina> disciplina;
+        Aluno aluno;
+        Disciplina disciplina;
 
-        try {
-            aluno = alunoRepo.findById(Integer.parseInt(paramAluno));
-            disciplina = disciplinaRepo.findById(Integer.parseInt(paramDisciplina));
-        } catch (NumberFormatException ex) {
-            System.out.println("ID inválido foi inserido.");
+        model.addAttribute("layout", "matricularLayout.html");
+
+        if (paramAluno.isBlank() || paramDisciplina.isBlank() || paramSemestre.isBlank()) {
+            model.addAttribute("resposta", "Preencha todos os campos.");
             return "index";
         }
 
-        if (aluno.isPresent() && disciplina.isPresent()){
-            AggregateReference<Aluno, Integer> alunoReference = AggregateReference.to(aluno.get().getId());
-            AggregateReference<Disciplina, Integer> disciplinaReference = AggregateReference.to(disciplina.get().getId());
+        aluno = alunoRepo.findByEmail(paramAluno);
+        disciplina = disciplinaRepo.findBySigla(paramDisciplina);
+
+        if (aluno != null && disciplina != null){
+            AggregateReference<Aluno, Integer> alunoReference = AggregateReference.to(aluno.getId());
+            AggregateReference<Disciplina, Integer> disciplinaReference = AggregateReference.to(disciplina.getId());
 
             Matricula matricula = new Matricula(null, alunoReference, disciplinaReference, paramSemestre);
             matriculaRepo.save(matricula);
         } else {
-            System.out.println("Aluno e/ou disciplina não existe");
+            model.addAttribute("resposta", "Aluno e/ou disciplina não existe!");
+            return "index";
         }
 
-
+        model.addAttribute("resposta", "Matricula realizada!");
         return "index";
     }
 }

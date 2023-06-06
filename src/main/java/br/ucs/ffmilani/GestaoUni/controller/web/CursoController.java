@@ -1,4 +1,4 @@
-package br.ucs.ffmilani.GestaoUni.controller;
+package br.ucs.ffmilani.GestaoUni.controller.web;
 
 import br.ucs.ffmilani.GestaoUni.dao.CursoRepository;
 import br.ucs.ffmilani.GestaoUni.dao.DisciplinaRepository;
