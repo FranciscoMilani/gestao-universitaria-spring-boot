@@ -1,5 +1,6 @@
 package br.ucs.ffmilani.GestaoUni;
 
+import br.ucs.ffmilani.GestaoUni.controller.web.MatriculaController;
 import br.ucs.ffmilani.GestaoUni.dao.MatriculaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,11 @@ public class MainFrame extends JFrame {
     private JPanel pMain;
     @Autowired
     MatriculaRepository matriculaRepo;
+
+    @Autowired
+    MatriculaController matriculaController;
+
+
     public MainFrame(){
         super("Gestão Universitária");
         setContentPane(pMain);

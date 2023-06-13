@@ -34,7 +34,6 @@ public class MatriculaController {
     @GetMapping("/matriculas")
     public String listaMatriculas(Model model, @Autowired HttpSession session){
         List<MatriculaDTO> mats = new ArrayList<>();
-        System.out.println(session.getAttribute("dbms"));
         matriculaRepo.findAll().forEach( m -> {
                 Optional<Aluno> a = alunoRepo.findById(m.getAluno().getId());
                 Optional<Disciplina> d = disciplinaRepo.findById(m.getDisciplina().getId());

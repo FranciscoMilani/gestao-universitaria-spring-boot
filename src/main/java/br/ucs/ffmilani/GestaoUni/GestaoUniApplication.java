@@ -23,7 +23,9 @@ public class GestaoUniApplication {
 	public DataSource dataSource;
 
 	public static void main(String[] args) {
-		new SpringApplicationBuilder(GestaoUniApplication.class).headless(false).run(args);
+		new SpringApplicationBuilder(GestaoUniApplication.class)
+				.headless(false)
+				.run(args);
 	}
 
 	@Bean
