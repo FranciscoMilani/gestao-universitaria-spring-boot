@@ -1,7 +1,8 @@
 package br.ucs.ffmilani.GestaoUni;
 
-import br.ucs.ffmilani.GestaoUni.controller.web.MatriculaController;
 import br.ucs.ffmilani.GestaoUni.dao.MatriculaRepository;
+import br.ucs.ffmilani.GestaoUni.model.MatriculaDTO;
+import br.ucs.ffmilani.GestaoUni.service.MatriculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,7 +25,7 @@ public class MainFrame extends JFrame {
     MatriculaRepository matriculaRepo;
 
     @Autowired
-    MatriculaController matriculaController;
+    MatriculaService matriculaService;
 
 
     public MainFrame(){
@@ -40,8 +41,8 @@ public class MainFrame extends JFrame {
         btnCadastrar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                var m = matriculaRepo.findById(Integer.parseInt(tfEmail.getText()));
-                System.out.println(m.get().toString());
+                String out = matriculaService.matricularAluno(new MatriculaDTO(tfEmail.getText(), tfSigla.getText(), tfSemestre.getText()));
+                lbStatus.setText(out);
             }
         });
     }
