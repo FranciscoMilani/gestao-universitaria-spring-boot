@@ -7,17 +7,11 @@ import br.ucs.ffmilani.GestaoUni.model.Aluno;
 import br.ucs.ffmilani.GestaoUni.model.Disciplina;
 import br.ucs.ffmilani.GestaoUni.model.Matricula;
 import br.ucs.ffmilani.GestaoUni.model.MatriculaDTO;
-import jakarta.servlet.http.HttpSession;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
-import org.springframework.stereotype.Controller;
+import org.springframework.data.relational.core.conversion.DbActionExecutionException;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +55,13 @@ public class MatriculaService {
             AggregateReference<Disciplina, Integer> disciplinaReference = AggregateReference.to(disciplina.getId());
 
             Matricula matricula = new Matricula(null, alunoReference, disciplinaReference, matriculaDTO.semestre());
-            matriculaRepo.save(matricula);
+
+            try {
+                matriculaRepo.save(matricula);
+            } catch (DbActionExecutionException e){
+                return "Já está cadastrado nessa disciplina";
+            }
+
         } else {
             return "Aluno e/ou disciplina não existe!";
         }
