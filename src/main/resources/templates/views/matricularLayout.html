@@ -1,57 +1,118 @@
 <div th:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
-<style>
-    .formulario {
-        margin-top: 200px;
-    }
+    <style>
+        .formulario {
+            margin-top: 200px;
+        }
 
-    label, input {
-        display: block;
-    }
+        label, input {
 
-    form {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: 350px;
-        margin: auto;
-        padding: 50px;
-        border-radius: 10px;
-        height: 100%;
-        background-color: #222831;
-        box-shadow: 0px 0px 10px rgba(104, 183, 184, 0.6);
-    }
+        }
 
-    form label {
-        text-align: left;
-    }
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 350px;
+            margin: auto;
+            padding: 50px;
+            border-radius: 10px;
+            height: 100%;
+            background-color: #222831;
+            box-shadow: 0px 0px 10px rgba(104, 183, 184, 0.6);
+        }
 
-    form input {
-        border: none;
-        background-color: #EEEEEE;
-        border-radius: 3px;
-        padding: 5px;
-    }
+        form label {
+            text-align: left;
+        }
 
-    form input[type="submit"] {
-        margin: 12px auto;
-        width: 50%;
-    }
+        form input:not([type="button"]) {
+            border: none;
+            background-color: #EEEEEE;
+            border-radius: 3px;
+            padding: 5px;
+        }
 
-    h1 {
-        text-align:center;
-    }
-</style>
+        form input[type="submit"] {
+            margin: 12px auto;
+            width: 50%;
+        }
+
+        form input[type="button"] {
+            background-color: pink;
+            border: 0 !important;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        h1 {
+            text-align:center;
+        }
+    </style>
+
+    <script>
+        $(document).ready( function(){
+            $("#dropDownList").change(function(e){
+                let prevVal = $("#disciplina").val();
+                let selVal = $(this).val();
+
+                if (selVal){
+                    let id = "#" + selVal;
+                    $(id).remove();
+                }
+
+                $("#disciplina").val(prevVal + selVal + ", ");
+            })
+
+            $("#reset-btn").click(function(){
+                $("#disciplina").val("");
+
+                getOptions();
+            })
+
+            getOptions();
+
+            function getOptions() {
+                $.ajax({
+                    url: "/preencherDropdown",
+                    type: 'GET',
+                    success: function(response){
+                        if (response.status == "success") {
+                            let optionsHTML = "";
+                            $("#dropDownList option:not(:first)").remove();
+
+                            $.each(response.data, function(i, sigla) {
+                                 optionsHTML += `<option id="${sigla}">${sigla}</option>`;
+                            })
+
+                            $("#dropDownList").append(optionsHTML);
+                            $("#dropDownList").val("0");
+                        }
+                    }
+                })
+            }
+        })
+    </script>
+
     <div class="formulario">
         <h1 class="text-center" id="titulo" data-titulo="Matricula de Aluno">Matricula de Aluno</h1>
-        <form action="/matricular" method="POST">
+        <form th:action="@{/matricular}" method="post" th:object="${matricula}">
             <label for="aluno">Email do aluno</label>
-            <input type="text" id="aluno" name="aluno">
+            <input type="text" id="aluno" name="aluno" th:field="*{nomeAluno}">
             <br>
-            <label for="disciplina">Sigla da disciplina</label>
-            <input type="text" id="disciplina" name="disciplina">
+            <br>
+            <select class="form-control" id="dropDownList">
+                <option value="0">Selecionar disciplinas</option>
+                <option th:each="option : ${options}" th:id="${option}" th:text="${option}"></option>
+            </select>
+            <div class="d-flex flex-row align-items-stretch mt-2">
+                <input type="text" id="disciplina" name="disciplina">
+                <input type="button" id="reset-btn" class="btn btn-light text-danger fw-bold flex-grow-1 rounded-start-2" value="X">
+            </div>
             <br>
             <label for="semestre">Semestre</label>
-            <input type="text" id="semestre" name="semestre" maxlength="6" placeholder="2022/2">
+            <input type="text" id="semestre" name="semestre" maxlength="6" placeholder="2022/2" th:field="*{semestre}">
             <input type="submit">
             <p th:text="${resposta}" th:if="${resposta} != null"></p>
         </form>

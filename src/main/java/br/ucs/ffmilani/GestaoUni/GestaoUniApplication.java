@@ -1,5 +1,8 @@
 package br.ucs.ffmilani.GestaoUni;
 
+import br.ucs.ffmilani.GestaoUni.Swing.MainFrame;
+import br.ucs.ffmilani.GestaoUni.controller.swing.MainMenuController;
+import br.ucs.ffmilani.GestaoUni.controller.swing.RelatorioController;
 import br.ucs.ffmilani.GestaoUni.dao.*;
 import br.ucs.ffmilani.GestaoUni.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
 
@@ -181,8 +185,13 @@ public class GestaoUniApplication {
 		}
 	}
 
+//	@Bean
+//	CommandLineRunner runner(@Autowired MainFrame frame) {
+//		return args -> SwingUtilities.invokeLater(() -> new Window(frame));
+//	}
+
 	@Bean
-	CommandLineRunner runner(@Autowired MainFrame frame) {
-		return args -> SwingUtilities.invokeLater(() -> new Window(frame));
+	CommandLineRunner runner(@Autowired MainMenuController controller) {
+		return args -> SwingUtilities.invokeLater(() -> controller.prepareAndOpen());
 	}
 }

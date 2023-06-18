@@ -1,12 +1,10 @@
 package br.ucs.ffmilani.GestaoUni.service;
 
 import br.ucs.ffmilani.GestaoUni.dao.AlunoRepository;
+import br.ucs.ffmilani.GestaoUni.dao.CursoRepository;
 import br.ucs.ffmilani.GestaoUni.dao.DisciplinaRepository;
 import br.ucs.ffmilani.GestaoUni.dao.MatriculaRepository;
-import br.ucs.ffmilani.GestaoUni.model.Aluno;
-import br.ucs.ffmilani.GestaoUni.model.Disciplina;
-import br.ucs.ffmilani.GestaoUni.model.Matricula;
-import br.ucs.ffmilani.GestaoUni.model.MatriculaDTO;
+import br.ucs.ffmilani.GestaoUni.model.*;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
@@ -16,6 +14,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 @Service
 @AllArgsConstructor
@@ -23,6 +23,7 @@ public class MatriculaService {
     private MatriculaRepository matriculaRepo;
     private AlunoRepository alunoRepo;
     private DisciplinaRepository disciplinaRepo;
+    private CursoRepository cursoRepository;
 
     public List<MatriculaDTO> listarMatriculas(){
         List<MatriculaDTO> mats = new ArrayList<>();
@@ -36,36 +37,69 @@ public class MatriculaService {
         return mats;
     }
 
-    public String matricularAluno(MatriculaDTO matriculaDTO) {
+    public String matricularAluno(MatriculaDTO matriculaDTO, List<String> disciplinas) {
         Aluno aluno;
         Disciplina disciplina;
 
         if (matriculaDTO.nomeAluno().isBlank()
-                || matriculaDTO.nomeDisciplina().isBlank()
                 || matriculaDTO.semestre().isBlank()) {
 
             return "Preencha todos os campos";
         }
 
         aluno = alunoRepo.findByEmail(matriculaDTO.nomeAluno());
-        disciplina = disciplinaRepo.findBySigla(matriculaDTO.nomeDisciplina());
 
-        if (aluno != null && disciplina != null){
-            AggregateReference<Aluno, Integer> alunoReference = AggregateReference.to(aluno.getId());
-            AggregateReference<Disciplina, Integer> disciplinaReference = AggregateReference.to(disciplina.getId());
+        if (disciplinas == null || disciplinas.size() < 3){
+            return "Selecione ao menos 3 disciplinas";
+        }
 
-            Matricula matricula = new Matricula(null, alunoReference, disciplinaReference, matriculaDTO.semestre());
+        List<Matricula> byAlunoSemestre = matriculaRepo.findByAlunoAndSemestre(aluno.getId(), matriculaDTO.semestre());
 
-            try {
-                matriculaRepo.save(matricula);
-            } catch (DbActionExecutionException e){
-                return "Já está cadastrado nessa disciplina";
+        if (byAlunoSemestre.size() > 1){
+            return "Este aluno já foi matriculado nesse semestre";
+        }
+
+        for (String disc : disciplinas) {
+            disciplina = disciplinaRepo.findBySigla(disc);
+
+            if (aluno != null && disciplina != null) {
+                Disciplina bySigla = disciplinaRepo.findBySigla(disc);
+                Optional<Curso> curso = cursoRepository.findById(aluno.getCurso().getId());
+                DisciplinaRef disciplinaRef = curso.get().getDisciplinas()
+                        .stream()
+                        .filter(d -> bySigla.getId().equals(d.getId()))
+                        .findAny()
+                        .orElse(null);
+
+                if (disciplinaRef == null) {
+                    return "Disciplina não pertence ao curso";
+                }
+
+                AggregateReference<Aluno, Integer> alunoReference = AggregateReference.to(aluno.getId());
+                AggregateReference<Disciplina, Integer> disciplinaReference = AggregateReference.to(disciplina.getId());
+
+                Matricula matricula = new Matricula(null, alunoReference, disciplinaReference, matriculaDTO.semestre());
+
+                try {
+                    matriculaRepo.save(matricula);
+                } catch (DbActionExecutionException e) {
+                    return "Já está matriculado na disciplina [" + disc + "]";
+                }
+
+            } else {
+                return "Aluno e/ou disciplina não existe!";
             }
-
-        } else {
-            return "Aluno e/ou disciplina não existe!";
         }
 
         return "Matricula realizada!";
+    }
+
+    public List<String> getSiglas(){
+        Iterable<Disciplina> iterable = disciplinaRepo.findAll();
+        List<String> siglas = StreamSupport.stream(iterable.spliterator(), false)
+                .map(element -> element.getSigla())
+                .collect(Collectors.toList());
+
+        return siglas;
     }
 }
