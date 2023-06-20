@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
@@ -28,12 +29,31 @@ public class RelatorioController extends AbstractFrameController {
     @PostConstruct
     private void prepareListeners(){
         registerAction(mainFrame.getRelatorioComboBox(), e -> selecionaRelatorio());
-        //registerAction(mainFrame.getBtnCadastrar(), e -> ));
     }
 
     @Override
     public void prepareAndOpen() {
-        // inicializar combobox, inicializar lista, preencher lista...
+        inicializaComboBox();
+        inicializaTable();
+    }
+
+    private void inicializaComboBox() {
+        JComboBox<String> comboBox = mainFrame.getRelatorioComboBox();
+        DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
+        comboBoxModel.addAll(Arrays.asList(
+                "Matriculas",
+                "Alunos",
+                "Cursos",
+                "Disciplinas"
+        ));
+
+        comboBox.dispatchEvent(new ActionEvent(new Object(), ActionEvent.ACTION_PERFORMED, ""));
+        comboBox.setModel(comboBoxModel);
+        comboBox.setSelectedIndex(0);
+    }
+
+    private void inicializaTable(){
+        mainFrame.getRelatorioTable().setEnabled(false);
     }
 
     private void selecionaRelatorio() {
@@ -65,7 +85,6 @@ public class RelatorioController extends AbstractFrameController {
                 mostraRelatorio(headers, disciplinas, obj -> new Object[]{obj.getNome(), obj.getSigla(), obj.getCreditos(), obj.getCargahoraria()});
             }
         }
-        JOptionPane.showMessageDialog(null, "Hello!");
     }
 
     private <T> void mostraRelatorio(List<String> headers, List<T> data,  Function<T, Object[]> mappingFunction){

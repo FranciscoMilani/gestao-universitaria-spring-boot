@@ -82,7 +82,7 @@
                 </constraints>
                 <properties>
                   <labelFor value="f208a"/>
-                  <text value="Sigla"/>
+                  <text value="Siglas (separadas por vírgula)"/>
                 </properties>
               </component>
               <component id="3cde8" class="javax.swing.JLabel">

@@ -47,22 +47,25 @@ public class MatriculaService {
             return "Preencha todos os campos";
         }
 
-        aluno = alunoRepo.findByEmail(matriculaDTO.nomeAluno());
-
         if (disciplinas == null || disciplinas.size() < 3){
             return "Selecione ao menos 3 disciplinas";
         }
 
-        List<Matricula> byAlunoSemestre = matriculaRepo.findByAlunoAndSemestre(aluno.getId(), matriculaDTO.semestre());
+        aluno = alunoRepo.findByEmail(matriculaDTO.nomeAluno());
+        if (aluno == null){
+            return "Aluno não existe no sistema";
+        } else {
+            List<Matricula> byAlunoSemestre = matriculaRepo.findByAlunoAndSemestre(aluno.getId(), matriculaDTO.semestre());
 
-        if (byAlunoSemestre.size() > 1){
-            return "Este aluno já foi matriculado nesse semestre";
+            if (byAlunoSemestre.size() > 1){
+                return "Este aluno já foi matriculado nesse semestre";
+            }
         }
 
         for (String disc : disciplinas) {
             disciplina = disciplinaRepo.findBySigla(disc);
 
-            if (aluno != null && disciplina != null) {
+            if (disciplina != null) {
                 Disciplina bySigla = disciplinaRepo.findBySigla(disc);
                 Optional<Curso> curso = cursoRepository.findById(aluno.getCurso().getId());
                 DisciplinaRef disciplinaRef = curso.get().getDisciplinas()
@@ -87,7 +90,7 @@ public class MatriculaService {
                 }
 
             } else {
-                return "Aluno e/ou disciplina não existe!";
+                return "Disciplina não existe no sistema";
             }
         }
 
