@@ -26,6 +26,14 @@ import javax.sql.DataSource;
                 return DataSourceBuilder.create().build();
             }
 
+//            @Bean(name = "datasource3")
+//            @ConditionalOnProperty(name = "database.type", havingValue = "h2")
+//            @ConfigurationProperties(prefix="h2.datasource")
+//            public DataSource tertiaryDataSource(){
+//                return DataSourceBuilder.create().build();
+//            }
+
+
 //            @Bean
 //            public JdbcTemplate postgresJdbcTemplate(DataSource postgresDataSource){
 //                return new JdbcTemplate(postgresDataSource);
