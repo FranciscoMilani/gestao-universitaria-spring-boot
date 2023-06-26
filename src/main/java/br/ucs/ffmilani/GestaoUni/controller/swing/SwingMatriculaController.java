@@ -1,13 +1,12 @@
 package br.ucs.ffmilani.GestaoUni.controller.swing;
 
 import br.ucs.ffmilani.GestaoUni.Swing.MainFrame;
-import br.ucs.ffmilani.GestaoUni.model.MatriculaDTO;
+import br.ucs.ffmilani.GestaoUni.model.DTO.MatriculaDTO;
 import br.ucs.ffmilani.GestaoUni.service.MatriculaService;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 
-import java.awt.event.ActionEvent;
 import java.util.Arrays;
 import java.util.List;
 

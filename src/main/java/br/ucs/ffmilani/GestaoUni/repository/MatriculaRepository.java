@@ -1,6 +1,5 @@
-package br.ucs.ffmilani.GestaoUni.dao;
+package br.ucs.ffmilani.GestaoUni.repository;
 
-import br.ucs.ffmilani.GestaoUni.model.Aluno;
 import br.ucs.ffmilani.GestaoUni.model.Matricula;
 import org.springframework.data.repository.CrudRepository;
 

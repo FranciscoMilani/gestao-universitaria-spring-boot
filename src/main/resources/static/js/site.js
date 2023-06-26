@@ -1,8 +1,10 @@
-window.onload = function() {
+$(document).ready(function(){
     let path = window.location.pathname;
-
     let nome = path.toLowerCase();
     switch (nome) {
+        case '/universidades':
+            alteraBotao('universidades');
+            break;
         case '/matricular':
             alteraBotao('matricular');
             break;
@@ -18,6 +20,9 @@ window.onload = function() {
         case '/disciplinas':
             alteraBotao('disciplinas');
             break;
+        case '/cadastro/aluno':
+            alteraBotao('cadastro-aluno');
+            break;
     }
 
     function alteraBotao(nome){
@@ -25,4 +30,4 @@ window.onload = function() {
         button.classList.add('active');
         button.classList.remove('text-white');
     }
-}
+})

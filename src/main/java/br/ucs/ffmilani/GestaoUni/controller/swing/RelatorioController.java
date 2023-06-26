@@ -1,10 +1,10 @@
 package br.ucs.ffmilani.GestaoUni.controller.swing;
 
 import br.ucs.ffmilani.GestaoUni.Swing.MainFrame;
-import br.ucs.ffmilani.GestaoUni.model.AlunoDTO;
-import br.ucs.ffmilani.GestaoUni.model.CursoDTO;
+import br.ucs.ffmilani.GestaoUni.model.DTO.AlunoDTO;
+import br.ucs.ffmilani.GestaoUni.model.DTO.CursoDTO;
 import br.ucs.ffmilani.GestaoUni.model.Disciplina;
-import br.ucs.ffmilani.GestaoUni.model.MatriculaDTO;
+import br.ucs.ffmilani.GestaoUni.model.DTO.MatriculaDTO;
 import br.ucs.ffmilani.GestaoUni.service.MatriculaService;
 import br.ucs.ffmilani.GestaoUni.service.RelatorioService;
 import jakarta.annotation.PostConstruct;

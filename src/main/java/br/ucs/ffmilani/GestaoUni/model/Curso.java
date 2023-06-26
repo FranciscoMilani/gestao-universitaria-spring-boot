@@ -3,10 +3,7 @@ package br.ucs.ffmilani.GestaoUni.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import br.ucs.ffmilani.GestaoUni.dao.UniversidadeRepository;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.jdbc.core.mapping.AggregateReference;
-import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 import org.springframework.data.relational.core.mapping.Table;
 

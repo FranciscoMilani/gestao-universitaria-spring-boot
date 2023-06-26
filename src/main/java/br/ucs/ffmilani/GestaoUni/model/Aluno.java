@@ -13,11 +13,6 @@ public final class Aluno {
 	private String nome;
 	private String email;
 	private String password;
-
-	//@Transient
-//	@Column("id")
-//	private Curso curso;
-
 	private AggregateReference<Curso, Integer> curso;
 
 	public Aluno(Integer id, String nome, String email, String password, AggregateReference<Curso, Integer> curso) {

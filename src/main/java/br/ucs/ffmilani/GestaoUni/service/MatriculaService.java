@@ -1,12 +1,12 @@
 package br.ucs.ffmilani.GestaoUni.service;
 
-import br.ucs.ffmilani.GestaoUni.dao.AlunoRepository;
-import br.ucs.ffmilani.GestaoUni.dao.CursoRepository;
-import br.ucs.ffmilani.GestaoUni.dao.DisciplinaRepository;
-import br.ucs.ffmilani.GestaoUni.dao.MatriculaRepository;
+import br.ucs.ffmilani.GestaoUni.repository.AlunoRepository;
+import br.ucs.ffmilani.GestaoUni.repository.CursoRepository;
+import br.ucs.ffmilani.GestaoUni.repository.DisciplinaRepository;
+import br.ucs.ffmilani.GestaoUni.repository.MatriculaRepository;
 import br.ucs.ffmilani.GestaoUni.model.*;
+import br.ucs.ffmilani.GestaoUni.model.DTO.MatriculaDTO;
 import lombok.AllArgsConstructor;
-import org.springframework.dao.DuplicateKeyException;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.data.relational.core.conversion.DbActionExecutionException;
 import org.springframework.stereotype.Service;

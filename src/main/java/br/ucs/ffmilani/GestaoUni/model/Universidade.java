@@ -1,6 +1,7 @@
 package br.ucs.ffmilani.GestaoUni.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.util.UUID;
@@ -12,6 +13,7 @@ public class Universidade {
     private Integer id;
     private String sigla;
     private String nome;
+
 
     public Universidade(Integer id, String sigla, String nome) {
         this.id = id;

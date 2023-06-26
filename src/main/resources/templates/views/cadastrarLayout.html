@@ -1,0 +1,98 @@
+<div th:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
+    <style>
+        .formulario {
+            margin-top: 200px;
+        }
+
+        label, input {
+
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 350px;
+            margin: auto;
+            padding: 50px;
+            border-radius: 10px;
+            height: 100%;
+            background-color: #222831;
+            box-shadow: 0px 0px 10px rgba(104, 183, 184, 0.6);
+        }
+
+        form label {
+            text-align: left;
+        }
+
+        form input:not([type="button"]) {
+            border: none;
+            background-color: #EEEEEE;
+            border-radius: 3px;
+            padding: 5px;
+        }
+
+        form input[type="submit"] {
+            margin: 12px auto;
+            width: 50%;
+        }
+
+        form input[type="button"] {
+            background-color: pink;
+            border: 0 !important;
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+        h1 {
+            text-align:center;
+        }
+    </style>
+
+    <script>
+        $(document).ready( function(){
+            getOptions();
+
+            function getOptions() {
+                $.ajax({
+                    url: "/preencherDropdownCursos",
+                    type: 'GET',
+                    success: function(response){
+                        if (response.status == "success") {
+                            let optionsHTML = "";
+                            $.each(response.data, function(i, nome) {
+                                 optionsHTML += `<option id="${nome}">${nome}</option>`;
+                            })
+
+                            $("#curso").append(optionsHTML);
+                        }
+                    }
+                })
+            }
+        })
+    </script>
+
+    <div class="formulario">
+        <h1 class="text-center" id="titulo" data-titulo="Cadastro de Aluno">Cadastro de Aluno</h1>
+        <form action="/cadastro/aluno" method="post" th:object="${cadastro}">
+            <label for="nome">Nome do aluno</label>
+            <input type="text" id="nome" name="nome" required>
+            <br>
+            <label for="email">Email do aluno</label>
+            <input type="text" id="email" name="email" required>
+            <br>
+            <label for="curso">Curso</label>
+            <select class="form-control" id="curso" name="curso" required>
+                <option value="" selected>Selecionar curso</option>
+                <option th:each="opcao : ${opcoesCursos}" th:value="${opcao}" th:text="${opcao}"></option>
+            </select>
+            <br>
+            <label for="password">Senha</label>
+            <input type="password" id="password" name="password" required>
+            <input type="submit">
+            <p th:text="${resposta}" th:if="${resposta} != null"></p>
+        </form>
+    </div>
+</div>

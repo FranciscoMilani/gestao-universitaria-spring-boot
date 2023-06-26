@@ -1,6 +1,6 @@
 package br.ucs.ffmilani.GestaoUni.controller.web;
 
-import br.ucs.ffmilani.GestaoUni.model.MatriculaDTO;
+import br.ucs.ffmilani.GestaoUni.model.DTO.MatriculaDTO;
 import br.ucs.ffmilani.GestaoUni.service.MatriculaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -63,7 +62,7 @@ public class MatriculaController {
 
         Object response = new Object() {
             public final String status = "success";
-            public final List<String> data =  matriculaService.getSiglas();;
+            public final List<String> data =  matriculaService.getSiglas();
         };
 
         model.addAttribute("layout", "matricularLayout.html");
