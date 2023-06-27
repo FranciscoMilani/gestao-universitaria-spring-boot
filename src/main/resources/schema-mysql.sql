@@ -1,16 +1,18 @@
 CREATE TABLE universidade (
     id int AUTO_INCREMENT PRIMARY KEY,
     sigla varchar(10) NOT NULL,
-    nome varchar(255) NOT NULL
+    nome varchar(255) NOT NULL,
+    UNIQUE sigla
 );
 
 CREATE TABLE curso (
     id int AUTO_INCREMENT PRIMARY KEY,
     nome varchar(255) NOT NULL,
     cargaHoraria int NOT NULL,
-    tipo varchar(30)
---    universidade int NOT NULL,
---    FOREIGN KEY (universidade) REFERENCES universidade(id)
+    sigla varchar(5) NOT NULL UNIQUE,
+    --tipo varchar(30),
+    universidade int NOT NULL,
+    FOREIGN KEY (universidade) REFERENCES universidade(id)
 );
 
 CREATE TABLE aluno (

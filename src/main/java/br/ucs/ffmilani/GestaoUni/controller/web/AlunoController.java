@@ -5,7 +5,8 @@ import br.ucs.ffmilani.GestaoUni.repository.AlunoRepository;
 import br.ucs.ffmilani.GestaoUni.repository.CursoRepository;
 import br.ucs.ffmilani.GestaoUni.model.Aluno;
 import br.ucs.ffmilani.GestaoUni.model.DTO.AlunoCadastroDTO;
-import br.ucs.ffmilani.GestaoUni.service.CadastroService;
+import br.ucs.ffmilani.GestaoUni.service.CadastroAlunoService;
+import br.ucs.ffmilani.GestaoUni.service.CadastroAlunoService;
 import br.ucs.ffmilani.GestaoUni.service.RelatorioService;
 import br.ucs.ffmilani.GestaoUni.service.ValidadorEmailService;
 import lombok.AllArgsConstructor;
@@ -24,7 +25,7 @@ import java.util.List;
 public class AlunoController {
 
     private RelatorioService relatorioService;
-    private CadastroService cadastroService;
+    private CadastroAlunoService cadastroService;
     private AlunoRepository alunoRepo;
     private CursoRepository cursoRepo;
     private ValidadorEmailService validadorEmail;

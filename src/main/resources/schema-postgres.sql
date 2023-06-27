@@ -1,16 +1,18 @@
 create table universidade (
     id serial primary key,
     sigla varchar(10) not null,
-    nome varchar(255) not null
+    nome varchar(255) not null,
+    UNIQUE sigla
 );
 
 create table curso (
     id serial primary key,
     nome varchar(255) not null,
     cargaHoraria integer not null,
-    tipo varchar(30)
---    universidade integer not null,
---    foreign key (universidade) references universidade(id) on delete cascade
+    sigla varchar(5) not null unique,
+--    tipo varchar(30),
+    universidade integer not null,
+    foreign key (universidade) references universidade(id) on delete cascade
 );
 
 create table aluno (

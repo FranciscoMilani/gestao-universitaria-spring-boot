@@ -17,7 +17,6 @@ public class DataSourceConfiguration {
         return DataSourceBuilder.create().build();
     }
 
-    //@Primary
     @Bean(name = "datasource2")
     @ConditionalOnProperty(name = "database.type", havingValue = "mysql")
     @ConfigurationProperties(prefix="mysql.datasource")

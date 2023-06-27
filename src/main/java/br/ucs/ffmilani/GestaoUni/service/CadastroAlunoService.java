@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
-public class CadastroService {
+public class CadastroAlunoService {
 
     private AlunoRepository alunoRepo;
     private CursoRepository cursoRepo;

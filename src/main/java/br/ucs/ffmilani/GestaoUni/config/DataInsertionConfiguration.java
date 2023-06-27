@@ -3,6 +3,7 @@ package br.ucs.ffmilani.GestaoUni.config;
 import br.ucs.ffmilani.GestaoUni.model.*;
 import br.ucs.ffmilani.GestaoUni.repository.*;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jdbc.core.mapping.AggregateReference;
@@ -10,6 +11,7 @@ import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import javax.sql.DataSource;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 @Configuration
 @AllArgsConstructor
@@ -24,8 +26,12 @@ public class DataInsertionConfiguration {
 
     @Bean(name="carregaDadosIniciais")
     public void carregaDados(){
-        Universidade universidade = new Universidade(null, "UCS", "Universidade de Caxias do Sul");
-        universidade = uniRepo.save(universidade);
+        var values = uniRepo.findAll();
+
+        if (values.spliterator().getExactSizeIfKnown() > 0) {
+            System.out.println("Parece que já há dados cadastrados...");
+            return;
+        }
 
         /*
          * =============================================
@@ -33,9 +39,16 @@ public class DataInsertionConfiguration {
          * =============================================
          */
 
-        Curso cursoAds = new Curso(null, "Análise e Desenvolvimento de Sistemas", 2100);
-        Curso cursoJgs = new Curso(null, "Jogos Digitais", 2100);
-        Curso cursoBio = new Curso(null, "Biomedicina", 3400);
+        Curso cursoAds = new Curso(null, "Análise e Desenvolvimento de Sistemas", "ADS", 2100);
+        Curso cursoJgs = new Curso(null, "Jogos Digitais", "JGS", 2100);
+        Curso cursoBio = new Curso(null, "Biomedicina", "BIO", 3400);
+
+        Universidade universidade = new Universidade(null, "UCS", "Universidade de Caxias do Sul", Set.of(cursoAds, cursoJgs, cursoBio));
+        universidade = uniRepo.save(universidade);
+
+        cursoAds.setUniversidade(universidade.getId());
+        cursoJgs.setUniversidade(universidade.getId());
+        cursoBio.setUniversidade(universidade.getId());
 
         /*
          * =============================================

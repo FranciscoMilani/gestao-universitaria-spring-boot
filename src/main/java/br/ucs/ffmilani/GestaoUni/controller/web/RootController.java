@@ -1,6 +1,5 @@
 package br.ucs.ffmilani.GestaoUni.controller.web;
 
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 

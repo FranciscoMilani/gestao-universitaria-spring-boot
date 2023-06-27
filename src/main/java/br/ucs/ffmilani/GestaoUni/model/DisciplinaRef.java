@@ -1,7 +1,7 @@
 package br.ucs.ffmilani.GestaoUni.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 

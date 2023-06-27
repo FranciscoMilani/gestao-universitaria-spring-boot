@@ -5,6 +5,8 @@ import br.ucs.ffmilani.GestaoUni.model.DTO.AlunoDTO;
 import br.ucs.ffmilani.GestaoUni.model.DTO.CursoDTO;
 import br.ucs.ffmilani.GestaoUni.model.Disciplina;
 import br.ucs.ffmilani.GestaoUni.model.DTO.MatriculaDTO;
+import br.ucs.ffmilani.GestaoUni.model.Universidade;
+import br.ucs.ffmilani.GestaoUni.repository.UniversidadeRepository;
 import br.ucs.ffmilani.GestaoUni.service.MatriculaService;
 import br.ucs.ffmilani.GestaoUni.service.RelatorioService;
 import jakarta.annotation.PostConstruct;
@@ -25,6 +27,7 @@ public class RelatorioController extends AbstractFrameController {
     private MainFrame mainFrame;
     private MatriculaService matriculaService;
     private RelatorioService relatorioService;
+    private UniversidadeRepository uniRepo;
 
     @PostConstruct
     private void prepareListeners(){
@@ -41,6 +44,7 @@ public class RelatorioController extends AbstractFrameController {
         JComboBox<String> comboBox = mainFrame.getRelatorioComboBox();
         DefaultComboBoxModel<String> comboBoxModel = new DefaultComboBoxModel<>();
         comboBoxModel.addAll(Arrays.asList(
+                "Universidades",
                 "Matriculas",
                 "Alunos",
                 "Cursos",
@@ -64,6 +68,11 @@ public class RelatorioController extends AbstractFrameController {
         List<String> headers;
 
         switch (selected) {
+            case "Universidades" -> {
+                headers = Arrays.asList("Id", "Sigla", "Nome");
+                List<Universidade> universidades = (List<Universidade>) uniRepo.findAll();
+                mostraRelatorio(headers, universidades, obj -> new Object[]{obj.getId(), obj.getSigla(), obj.getNome()});
+            }
             case "Alunos" -> {
                 headers = Arrays.asList("Nome", "Email", "Curso");
                 List<AlunoDTO> alunos = relatorioService.listaAlunos();
@@ -75,9 +84,9 @@ public class RelatorioController extends AbstractFrameController {
                 mostraRelatorio(headers, matriculas, obj -> new Object[]{obj.nomeAluno(), obj.nomeDisciplina(), obj.semestre()});
             }
             case "Cursos" -> {
-                headers = Arrays.asList("Curso", "Carga Horária", "Disciplinas");
+                headers = Arrays.asList("Curso", "Carga Horária", "Disciplinas", "Universidade (Sigla)");
                 List<CursoDTO> cursos = relatorioService.listaCursos();
-                mostraRelatorio(headers, cursos, obj -> new Object[]{obj.nome(), obj.cargaHoraria(), Arrays.deepToString(obj.disciplinas().toArray())});
+                mostraRelatorio(headers, cursos, obj -> new Object[]{obj.nome(), obj.cargaHoraria(), Arrays.deepToString(obj.disciplinas().toArray()), obj.siglaUniversidade()});
             }
             case "Disciplinas" -> {
                 headers = Arrays.asList("Nome", "Sigla", "Créditos", "Carga Horária");

@@ -23,6 +23,9 @@ $(document).ready(function(){
         case '/cadastro/aluno':
             alteraBotao('cadastro-aluno');
             break;
+        case '/cadastro/curso':
+            alteraBotao('cadastro-curso');
+            break;
     }
 
     function alteraBotao(nome){

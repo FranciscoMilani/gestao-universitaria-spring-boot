@@ -5,11 +5,13 @@
             <th>Nome</th>
             <th>Carga Horária</th>
             <th>Disciplinas</th>
+            <th>Universidade (Sigla)</th>
         </tr>
         <tr th:each="curso : ${cursos}">
             <td th:text="${curso.nome}"></td>
             <td th:text="${curso.cargaHoraria}"></td>
             <td><span th:text="${#strings.listJoin(curso.disciplinas, ', ')}"></span></td>
+            <td th:text="${curso.siglaUniversidade}"></td>
         </tr>
     </table>
 </div>

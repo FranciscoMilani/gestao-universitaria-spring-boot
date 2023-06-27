@@ -11,11 +11,13 @@ public class MainMenuController extends AbstractFrameController {
     private MainFrame mainFrame;
     private RelatorioController relatorioController;
     private SwingMatriculaController matriculaController;
+    private SwingDadosController dadosController;
 
     @Override
     public void prepareAndOpen() {
         relatorioController.prepareAndOpen();
         matriculaController.prepareAndOpen();
+        dadosController.prepareAndOpen();
         mainFrame.setVisible(true);
     }
 }
