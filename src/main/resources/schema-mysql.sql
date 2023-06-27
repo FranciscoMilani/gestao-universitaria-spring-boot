@@ -11,7 +11,7 @@ CREATE TABLE curso (
     cargaHoraria int NOT NULL,
     sigla varchar(5) NOT NULL UNIQUE,
     universidade int NOT NULL,
-    FOREIGN KEY (universidade) REFERENCES universidade(id)
+    FOREIGN KEY (universidade) REFERENCES universidade(id) on delete cascade
 );
 
 CREATE TABLE aluno (
@@ -21,7 +21,7 @@ CREATE TABLE aluno (
     password varchar(30) NOT NULL,
     curso int,
     UNIQUE (email),
-    FOREIGN KEY (curso) REFERENCES curso(id)
+    FOREIGN KEY (curso) REFERENCES curso(id) on delete cascade
 );
 
 CREATE TABLE disciplina (
@@ -36,8 +36,8 @@ CREATE TABLE disciplina (
 CREATE TABLE curso_disciplina (
     curso int,
     disciplina int,
-    FOREIGN KEY (curso) REFERENCES curso(id),
-    FOREIGN KEY (disciplina) REFERENCES disciplina(id)
+    FOREIGN KEY (curso) REFERENCES curso(id) on delete cascade,
+    FOREIGN KEY (disciplina) REFERENCES disciplina(id) on delete cascade
 );
 
 CREATE TABLE matricula (
@@ -46,6 +46,6 @@ CREATE TABLE matricula (
     aluno int NOT NULL,
     disciplina int NOT NULL,
     UNIQUE (aluno, disciplina),
-    FOREIGN KEY (aluno) REFERENCES aluno(id),
-    FOREIGN KEY (disciplina) REFERENCES disciplina(id)
+    FOREIGN KEY (aluno) REFERENCES aluno(id) on delete cascade,
+    FOREIGN KEY (disciplina) REFERENCES disciplina(id) on delete cascade
 );
