@@ -92,7 +92,7 @@
     </script>
 
     <div class="formulario">
-        <h1 class="text-center" id="titulo" data-titulo="Matricula de Aluno">Matricula de Aluno</h1>
+        <h1 class="text-center" id="titulo" data-titulo="Matrícula de Aluno">Matrícula de Aluno</h1>
         <form th:action="@{/matricular}" method="post" th:object="${matricula}">
             <label for="aluno">Email do aluno</label>
             <input type="text" id="aluno" name="aluno" th:field="*{nomeAluno}">

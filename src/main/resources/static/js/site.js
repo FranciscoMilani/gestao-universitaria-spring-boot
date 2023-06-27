@@ -26,6 +26,9 @@ $(document).ready(function(){
         case '/cadastro/curso':
             alteraBotao('cadastro-curso');
             break;
+        case '/cadastro/disciplina':
+            alteraBotao('cadastro-disciplina');
+            break;
     }
 
     function alteraBotao(nome){

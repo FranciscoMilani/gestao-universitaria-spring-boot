@@ -1,6 +1,6 @@
 package br.ucs.ffmilani.GestaoUni.controller.swing;
 
-import br.ucs.ffmilani.GestaoUni.Swing.MainFrame;
+import br.ucs.ffmilani.GestaoUni.swingview.MainFrame;
 import br.ucs.ffmilani.GestaoUni.model.DTO.MatriculaDTO;
 import br.ucs.ffmilani.GestaoUni.service.MatriculaService;
 import jakarta.annotation.PostConstruct;
@@ -35,6 +35,7 @@ public class SwingMatriculaController extends AbstractFrameController {
 
         String outMessage = matriculaService.matricularAluno(
                 new MatriculaDTO(
+                        null,
                         mf.getTfEmail().getText(),
                         mf.getTfSigla().getText(),
                         mf.getTfSemestre().getText()),

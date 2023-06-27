@@ -38,7 +38,7 @@ public class CadastroCursoService {
         Curso curso = cursoRepo.findBySigla(cursoDto.sigla());
         Universidade uni = uniRepo.findBySigla(cursoDto.siglaUniversidade());
 
-        if (curso != null && uni != null){
+        if (curso == null && uni != null){
             Curso novoCurso = new Curso(null, cursoDto.nome(), cursoDto.sigla(), cursoDto.cargaHoraria());
             novoCurso.setUniversidade(uni.getId());
 
@@ -55,17 +55,4 @@ public class CadastroCursoService {
 
         return null;
     }
-
-//    public CursoCadastroDTO converteParaDTO(Curso curso){
-//        Integer cursoId = aluno.getCurso().getId();
-//        String cursoNome = cursoRepo.findById(cursoId).map(Curso::getNome).orElseThrow();
-//
-//        return new CursoCadastroDTO(
-//
-//                aluno.getNome(),
-//                aluno.getEmail(),
-//                cursoNome,
-//                aluno.getPassword()
-//        );
-//    }
 }

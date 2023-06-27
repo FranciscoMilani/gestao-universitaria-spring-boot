@@ -31,7 +31,7 @@ public class MatriculaService {
             Optional<Aluno> a = alunoRepo.findById(m.getAluno().getId());
             Optional<Disciplina> d = disciplinaRepo.findById(m.getDisciplina().getId());
 
-            mats.add(new MatriculaDTO(a.get().getNome(), d.get().getNome(), m.getSemestre()));
+            mats.add(new MatriculaDTO(m.getId(), a.get().getNome(), d.get().getNome(), m.getSemestre()));
         });
 
         return mats;

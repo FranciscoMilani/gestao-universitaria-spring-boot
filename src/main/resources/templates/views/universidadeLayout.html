@@ -5,11 +5,13 @@
             <th>Id</th>
             <th>Sigla</th>
             <th>Nome</th>
+            <th>Remover</th>
         </tr>
         <tr th:each="universidade : ${universidades}">
             <td th:text="${universidade.id}"></td>
             <td th:text="${universidade.sigla}"></td>
             <td th:text="${universidade.nome}"></td>
+            <td><a class="btn btn-danger text-white" th:href="@{universidades/remover/{id}(id=${universidade.id})}">X</a></td>
         </tr>
     </table>
 </div>

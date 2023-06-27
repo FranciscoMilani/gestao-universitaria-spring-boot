@@ -1,11 +1,9 @@
 package br.ucs.ffmilani.GestaoUni.controller.web;
 
-import br.ucs.ffmilani.GestaoUni.config.DataInsertionConfiguration;
-import br.ucs.ffmilani.GestaoUni.repository.AlunoRepository;
-import br.ucs.ffmilani.GestaoUni.repository.CursoRepository;
 import br.ucs.ffmilani.GestaoUni.model.Aluno;
 import br.ucs.ffmilani.GestaoUni.model.DTO.AlunoCadastroDTO;
-import br.ucs.ffmilani.GestaoUni.service.CadastroAlunoService;
+import br.ucs.ffmilani.GestaoUni.repository.AlunoRepository;
+import br.ucs.ffmilani.GestaoUni.repository.CursoRepository;
 import br.ucs.ffmilani.GestaoUni.service.CadastroAlunoService;
 import br.ucs.ffmilani.GestaoUni.service.RelatorioService;
 import br.ucs.ffmilani.GestaoUni.service.ValidadorEmailService;
@@ -14,7 +12,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -78,5 +79,11 @@ public class AlunoController {
 
         model.addAttribute("layout", "cadastrarLayout.html");
         return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("alunos/remover/{id}")
+    public ModelAndView removeAluno(@PathVariable("id") Integer id){
+        relatorioService.removeAluno(id);
+        return new ModelAndView("redirect:/alunos");
     }
 }

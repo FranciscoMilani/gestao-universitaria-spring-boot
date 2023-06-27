@@ -6,12 +6,14 @@
             <th>Sigla</th>
             <th>Créditos</th>
             <th>Carga Horária</th>
+            <th>Remover</th>
         </tr>
         <tr th:each="disciplina : ${disciplinas}">
             <td th:text="${disciplina.nome}"></td>
             <td th:text="${disciplina.sigla}"></td>
             <td th:text="${disciplina.creditos}"></td>
             <td th:text="${disciplina.cargahoraria}"></td>
+            <td><a class="btn btn-danger text-white" th:href="@{disciplinas/remover/{id}(id=${disciplina.id})}">X</a></td>
         </tr>
     </table>
 </div>

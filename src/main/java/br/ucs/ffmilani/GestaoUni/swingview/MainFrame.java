@@ -1,4 +1,4 @@
-package br.ucs.ffmilani.GestaoUni.Swing;
+package br.ucs.ffmilani.GestaoUni.swingview;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;

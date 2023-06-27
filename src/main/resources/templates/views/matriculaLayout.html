@@ -1,15 +1,17 @@
 <div th:fragment="content" xmlns:th="http://www.w3.org/1999/xhtml">
-    <h1 class="text-center" id="titulo" data-titulo="Lista de Matriculas">Matriculas</h1>
+    <h1 class="text-center" id="titulo" data-titulo="Lista de Matrículas">Matrículas</h1>
     <table class="table align-center table-striped table-dark table-hover overflow-hidden rounded-3">
         <tr class="table-light">
             <th>Aluno</th>
             <th>Disciplina</th>
             <th>Semestre</th>
+            <th>Remover</th>
         </tr>
         <tr th:each="matricula : ${matriculas}">
             <td th:text="${matricula.nomeAluno()}"></td>
             <td th:text="${matricula.nomeDisciplina()}"></td>
             <td th:text="${matricula.semestre()}"></td>
+            <td><a class="btn btn-danger text-white" th:href="@{matriculas/remover/{id}(id=${matricula.id})}">X</a></td>
         </tr>
     </table>
 </div>

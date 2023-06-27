@@ -1,6 +1,6 @@
 package br.ucs.ffmilani.GestaoUni.controller.swing;
 
-import br.ucs.ffmilani.GestaoUni.Swing.MainFrame;
+import br.ucs.ffmilani.GestaoUni.swingview.MainFrame;
 import br.ucs.ffmilani.GestaoUni.model.DTO.AlunoDTO;
 import br.ucs.ffmilani.GestaoUni.model.DTO.CursoDTO;
 import br.ucs.ffmilani.GestaoUni.model.Disciplina;

@@ -6,12 +6,14 @@
             <th>Carga Horária</th>
             <th>Disciplinas</th>
             <th>Universidade (Sigla)</th>
+            <th>Remover</th>
         </tr>
         <tr th:each="curso : ${cursos}">
             <td th:text="${curso.nome}"></td>
             <td th:text="${curso.cargaHoraria}"></td>
             <td><span th:text="${#strings.listJoin(curso.disciplinas, ', ')}"></span></td>
             <td th:text="${curso.siglaUniversidade}"></td>
+            <td><a class="btn btn-danger text-white" th:href="@{cursos/remover/{id}(id=${curso.id})}">X</a></td>
         </tr>
     </table>
 </div>

@@ -1,6 +1,6 @@
 package br.ucs.ffmilani.GestaoUni.controller.swing;
 
-import br.ucs.ffmilani.GestaoUni.Swing.MainFrame;
+import br.ucs.ffmilani.GestaoUni.swingview.MainFrame;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 

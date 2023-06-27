@@ -2,6 +2,8 @@ package br.ucs.ffmilani.GestaoUni.controller.web;
 
 import br.ucs.ffmilani.GestaoUni.model.DTO.MatriculaDTO;
 import br.ucs.ffmilani.GestaoUni.service.MatriculaService;
+import br.ucs.ffmilani.GestaoUni.service.RelatorioService;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,10 +16,11 @@ import java.util.Arrays;
 import java.util.List;
 
 @Controller
+@AllArgsConstructor
 public class MatriculaController {
 
-    @Autowired
     private MatriculaService matriculaService;
+    private RelatorioService relatorioService;
 
     @GetMapping("/matriculas")
     public String listaMatriculas(Model model){
@@ -29,7 +32,7 @@ public class MatriculaController {
     @GetMapping("/matricular")
     public ModelAndView matricular(){
         ModelAndView mv = new ModelAndView();
-        MatriculaDTO mat = new MatriculaDTO(null, null, null);
+        MatriculaDTO mat = new MatriculaDTO(null, null, null, null);
 
         mv.setViewName("index");
         mv.addObject("matricula", mat);
@@ -67,5 +70,11 @@ public class MatriculaController {
 
         model.addAttribute("layout", "matricularLayout.html");
         return new ResponseEntity<Object>(response, HttpStatus.OK);
+    }
+
+    @GetMapping("matriculas/remover/{id}")
+    public ModelAndView removeMatricula(@PathVariable("id") Integer id){
+        relatorioService.removeMatricula(id);
+        return new ModelAndView("redirect:/matriculas");
     }
 }

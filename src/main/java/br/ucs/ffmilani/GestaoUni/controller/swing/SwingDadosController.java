@@ -1,7 +1,7 @@
 package br.ucs.ffmilani.GestaoUni.controller.swing;
 
 import br.ucs.ffmilani.GestaoUni.GestaoUniApplication;
-import br.ucs.ffmilani.GestaoUni.Swing.MainFrame;
+import br.ucs.ffmilani.GestaoUni.swingview.MainFrame;
 import br.ucs.ffmilani.GestaoUni.service.DatabaseStatusService;
 import jakarta.annotation.PostConstruct;
 import lombok.AllArgsConstructor;
