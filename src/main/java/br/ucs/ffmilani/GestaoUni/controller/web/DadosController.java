@@ -14,6 +14,6 @@ public class DadosController {
     @GetMapping("/insere-dados")
     public String testaInsereDados(){
         dbss.tentaCadastrarDados();
-        return "index";
+        return "redirect:/";
     }
 }

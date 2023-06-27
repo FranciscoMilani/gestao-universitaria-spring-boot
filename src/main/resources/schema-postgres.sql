@@ -10,7 +10,6 @@ create table curso (
     nome varchar(255) not null,
     cargaHoraria integer not null,
     sigla varchar(5) not null unique,
---    tipo varchar(30),
     universidade integer not null,
     foreign key (universidade) references universidade(id) on delete cascade
 );

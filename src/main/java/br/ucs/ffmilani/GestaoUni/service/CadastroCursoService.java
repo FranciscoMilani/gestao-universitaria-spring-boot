@@ -1,25 +1,21 @@
 package br.ucs.ffmilani.GestaoUni.service;
 
-import br.ucs.ffmilani.GestaoUni.model.Aluno;
 import br.ucs.ffmilani.GestaoUni.model.Curso;
 import br.ucs.ffmilani.GestaoUni.model.DTO.CursoCadastroDTO;
+import br.ucs.ffmilani.GestaoUni.model.Disciplina;
 import br.ucs.ffmilani.GestaoUni.model.Universidade;
-import br.ucs.ffmilani.GestaoUni.repository.AlunoRepository;
-import br.ucs.ffmilani.GestaoUni.repository.CursoRepository;
-import br.ucs.ffmilani.GestaoUni.repository.DisciplinaRepository;
-import br.ucs.ffmilani.GestaoUni.repository.UniversidadeRepository;
+import br.ucs.ffmilani.GestaoUni.repository.*;
 import lombok.AllArgsConstructor;
-import org.springframework.data.jdbc.core.mapping.AggregateReference;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class CadastroCursoService {
 
-    private AlunoRepository alunoRepo;
     private CursoRepository cursoRepo;
     private UniversidadeRepository uniRepo;
     private DisciplinaRepository disciplinaRepo;
+    private CursoDisciplinaRepository cursoDisciplinaRepo;
 
     public String cadastraCurso(Curso curso){
         if (curso == null){
@@ -30,7 +26,7 @@ public class CadastroCursoService {
             cursoRepo.save(curso);
             return "Cadastrado";
         } catch (Exception e){
-            return "Erro ao cadastrar";
+            return "Erro ao cadastrar. Algo incorreto.";
         }
     }
 
@@ -43,8 +39,16 @@ public class CadastroCursoService {
             novoCurso.setUniversidade(uni.getId());
 
             for (String sigla : cursoDto.siglaDisciplinas()){
-                if (disciplinaRepo.findBySigla(sigla) != null){
-                    novoCurso.addDisciplinas(disciplinaRepo.findBySigla(sigla));
+                Disciplina d = disciplinaRepo.findBySigla(sigla);
+
+                if (d != null){
+                    int count = cursoDisciplinaRepo.countByDisciplina(d.getId());
+
+                    if (count == 0){
+                        novoCurso.addDisciplinas(disciplinaRepo.findBySigla(sigla));
+                    } else {
+                        return null;
+                    }
                 } else {
                     return null;
                 }

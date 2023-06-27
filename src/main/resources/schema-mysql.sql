@@ -10,7 +10,6 @@ CREATE TABLE curso (
     nome varchar(255) NOT NULL,
     cargaHoraria int NOT NULL,
     sigla varchar(5) NOT NULL UNIQUE,
-    --tipo varchar(30),
     universidade int NOT NULL,
     FOREIGN KEY (universidade) REFERENCES universidade(id)
 );

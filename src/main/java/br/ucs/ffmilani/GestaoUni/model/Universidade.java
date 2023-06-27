@@ -52,11 +52,15 @@ public class Universidade {
         this.nome = nome;
     }
 
-//    public Set<Curso> getCursos() {
-//        return cursos;
-//    }
-//
-//    public void setCursos(Set<Curso> cursos) {
-//        this.cursos = cursos;
-//    }
+    public Set<Curso> getCursos() {
+        return cursos;
+    }
+
+    public void setCursos(Set<Curso> cursos) {
+        this.cursos = cursos;
+    }
+
+    public void addCurso(Curso curso){
+        cursos.add(curso);
+    }
 }

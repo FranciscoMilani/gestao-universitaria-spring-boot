@@ -1,13 +1,12 @@
 package br.ucs.ffmilani.GestaoUni.controller.web;
 
-import br.ucs.ffmilani.GestaoUni.model.Aluno;
 import br.ucs.ffmilani.GestaoUni.model.Curso;
-import br.ucs.ffmilani.GestaoUni.model.DTO.AlunoCadastroDTO;
 import br.ucs.ffmilani.GestaoUni.model.DTO.CursoCadastroDTO;
+import br.ucs.ffmilani.GestaoUni.model.DisciplinaRef;
+import br.ucs.ffmilani.GestaoUni.repository.CursoDisciplinaRepository;
 import br.ucs.ffmilani.GestaoUni.service.CadastroCursoService;
 import br.ucs.ffmilani.GestaoUni.service.RelatorioService;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +30,7 @@ public class CursoController {
     public String listaCursos(Model model) {
         model.addAttribute("layout", "cursoLayout.html");
         model.addAttribute("cursos", relatorioService.listaCursos());
+
         return "index";
     }
 
@@ -51,7 +50,7 @@ public class CursoController {
                                        @RequestParam String disciplinas,
                                        @RequestParam String universidade){
 
-        List<String> cursoStringList = Arrays.stream(disciplinas.split(","))
+        List<String> disciplinaStringList = Arrays.stream(disciplinas.split(","))
                 .map(String::trim)
                 .filter(str -> !str.isEmpty())
                 .collect(Collectors.toList());
@@ -59,7 +58,7 @@ public class CursoController {
         mv.setViewName("index");
         mv.addObject("layout", "cadastrarCursoLayout.html");
 
-        Curso curso = cadastroCursoService.converteParaEntidade(new CursoCadastroDTO(nome, sigla, cargahoraria, cursoStringList, universidade));
+        Curso curso = cadastroCursoService.converteParaEntidade(new CursoCadastroDTO(nome, sigla, cargahoraria, disciplinaStringList, universidade));
         if (curso == null){
             mv.addObject("resposta", "Erro no cadastro");
             return mv;

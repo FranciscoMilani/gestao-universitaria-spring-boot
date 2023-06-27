@@ -20,6 +20,9 @@ $(document).ready(function(){
         case '/disciplinas':
             alteraBotao('disciplinas');
             break;
+//        case '/cadastro/universidade':
+//            alteraBotao('cadastro-universidade');
+//            break;
         case '/cadastro/aluno':
             alteraBotao('cadastro-aluno');
             break;
